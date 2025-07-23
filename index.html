@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ganga Auji - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0d1117;
+            --bg-light: #161b22;
+            --border-color: #30363d;
+            --text-primary: #c9d1d9;
+            --text-secondary: #8b949e;
+            --accent-color: #58a6ff;
+            --accent-hover: #79c0ff;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .hero-bg {
+            background-color: var(--bg-dark);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section-title {
+            border-bottom: 3px solid var(--accent-color);
+            padding-bottom: 8px;
+            display: inline-block;
+        }
+
+        .project-card {
+            background-color: var(--bg-light);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            will-change: transform, box-shadow, border-color;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 0 25px rgba(88, 166, 255, 0.2);
+            border-color: var(--accent-color);
+        }
+
+        .skill-badge {
+            transition: transform 0.2s ease, color 0.2s ease;
+            color: var(--text-secondary);
+        }
+
+        .skill-badge:hover {
+            transform: scale(1.1);
+            color: var(--accent-color);
+        }
+
+        .tab-button {
+             color: var(--text-secondary);
+             border-color: transparent;
+        }
+
+        .tab-button.active {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+        
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: var(--bg-dark);
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+        }
+        
+        /* Chatbot styles */
+        #chat-window {
+            height: 300px;
+            background-color: #010409;
+            border: 1px solid var(--border-color);
+        }
+        .chat-message {
+            padding: 12px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+        .user-message {
+            background-color: var(--accent-color);
+            color: var(--bg-dark);
+            align-self: flex-end;
+            margin-left: auto;
+        }
+        .ai-message {
+            background-color: var(--bg-light);
+            color: var(--text-primary);
+            align-self: flex-start;
+        }
+        
+        .loader {
+            width: 20px;
+            height: 20px;
+            border: 3px solid var(--text-secondary);
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            display: inline-block;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+        }
+
+        @keyframes rotation {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="bg-opacity-90 backdrop-blur-sm shadow-md sticky top-0 z-50" style="background-color: rgba(13, 17, 23, 0.7);">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-white">Ganga Auji</a>
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="#about" class="text-gray-300 hover:text-white transition">About</a>
+                <a href="#projects" class="text-gray-300 hover:text-white transition">Projects</a>
+                <a href="#skills" class="text-gray-300 hover:text-white transition">Skills</a>
+                <a href="#contact" class="btn-primary px-4 py-2 rounded-md">Contact</a>
+            </div>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-white focus:outline-none">
+                    <i class="fas fa-bars fa-lg"></i>
+                </button>
+            </div>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+            <a href="#about" class="block text-gray-300 hover:text-white py-2">About</a>
+            <a href="#projects" class="block text-gray-300 hover:text-white py-2">Projects</a>
+            <a href="#skills" class="block text-gray-300 hover:text-white py-2">Skills</a>
+            <a href="#ai-assistant" class="block text-gray-300 hover:text-white py-2">AI Assistant</a>
+            <a href="#contact" class="block btn-primary mt-2 px-4 py-2 rounded-md text-center">Contact</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-bg text-white py-24 md:py-40">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-4 text-white">Data Science & Cloud Enthusiast</h1>
+                <p class="text-lg md:text-xl var(--text-secondary) mb-8 max-w-3xl mx-auto">Building scalable architectures and turning data into intelligent solutions.</p>
+                <a href="#projects" class="btn-primary text-lg font-semibold px-8 py-4 rounded-md">Explore My Work</a>
+            </div>
+        </section>
+
+        <!-- About Me Section -->
+        <section id="about" class="py-20" style="background-color: var(--bg-light);">
+            <div class="container mx-auto px-6">
+                 <h2 class="section-title text-3xl font-bold text-center mb-16 text-white">About Me</h2>
+                <div class="flex flex-col md:flex-row items-center gap-12">
+                    <div class="md:w-1/3">
+                        <img src="./Passport Size(Ganga).png" alt="Ganga Auji" class="rounded-full shadow-lg mx-auto border-4 border-[var(--border-color)]">
+                    <!-- https://placehold.co/400x400/161b22/8b949e?text=GA -->
+                    </div>
+                    <div class="md:w-2/3">
+                        <h3 class="text-2xl font-semibold mb-4 text-white">Hello! I'm Ganga Auji.</h3>
+                        <p class="leading-relaxed mb-4" style="color: var(--text-secondary);">
+                            I am a detail-oriented data science and cloud computing enthusiast with a strong foundation in programming, data analysis, and machine learning. My goal is to contribute to scalable architectures while continuously expanding my skills in a collaborative, innovative environment.
+                        </p>
+                        <p class="leading-relaxed" style="color: var(--text-secondary);">
+                           My experience includes deploying scalable architectures with AWS services like EC2, S3, and RDS, automating deployments with CI/CD pipelines, and managing containerized applications. I'm passionate about leveraging technology to build efficient and impactful solutions.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Projects Section -->
+        <section id="projects" class="py-20" style="background-color: var(--bg-dark);">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title text-3xl font-bold text-center mb-12 text-white">My Projects</h2>
+                <div class="flex justify-center mb-12">
+                    <div id="project-tabs" class="flex flex-wrap justify-center gap-4 md:gap-8 border-b-2" style="border-color: var(--border-color);">
+                        <button class="tab-button py-2 px-4 border-b-2 transition active" data-filter="all">All</button>
+                        <button class="tab-button py-2 px-4 border-b-2 transition" data-filter="devops">DevOps/CI-CD</button>
+                        <button class="tab-button py-2 px-4 border-b-2 transition" data-filter="aws">Cloud (AWS)</button>
+                        <button class="tab-button py-2 px-4 border-b-2 transition" data-filter="data">Data Analytics</button>
+                    </div>
+                </div>
+                <div id="project-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Project Cards will be dynamically shown/hidden -->
+                    <div class="project-card rounded-lg overflow-hidden" data-category="devops">
+                        <img src="https://placehold.co/600x400/0d1117/58a6ff?text=CI/CD+Pipeline" alt="CI/CD Pipeline Project" class="w-full h-56 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 text-white">CI/CD Pipeline for Web Deployment</h3>
+                            <p class="mb-4" style="color: var(--text-secondary);">Automated deployment using IAM, S3, CodeCommit, CodeBuild, and CodeDeploy.</p>
+                            <a href="#" class="font-semibold" style="color: var(--accent-color);">View on GitHub &rarr;</a>
+                        </div>
+                    </div>
+                    <div class="project-card rounded-lg overflow-hidden" data-category="aws">
+                        <img src="https://placehold.co/600x400/0d1117/58a6ff?text=IaC+Project" alt="Infrastructure as Code Project" class="w-full h-56 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 text-white">CI/CD Pipeline with IaC</h3>
+                            <p class="mb-4" style="color: var(--text-secondary);">A robust CI/CD pipeline using Infrastructure as Code (CloudFormation) on AWS.</p>
+                            <a href="#" class="font-semibold" style="color: var(--accent-color);">View on GitHub &rarr;</a>
+                        </div>
+                    </div>
+                    <div class="project-card rounded-lg overflow-hidden" data-category="data">
+                        <img src="https://placehold.co/600x400/0d1117/58a6ff?text=Data+Analysis" alt="Data Analysis Project" class="w-full h-56 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 text-white">SQL and Pandas Data Analysis</h3>
+                            <p class="mb-4" style="color: var(--text-secondary);">Projects involving data cleaning, manipulation, and analysis using SQL and Python.</p>
+                            <a href="#" class="font-semibold" style="color: var(--accent-color);">View on GitHub &rarr;</a>
+                        </div>
+                    </div>
+                    <div class="project-card rounded-lg overflow-hidden" data-category="data">
+                        <img src="https://placehold.co/600x400/0d1117/58a6ff?text=Data+Viz" alt="Power BI Project" class="w-full h-56 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 text-white">Interactive Power BI Dashboards</h3>
+                            <p class="mb-4" style="color: var(--text-secondary);">Developed dashboards to visualize data and extract actionable insights with Power BI.</p>
+                            <a href="#" class="font-semibold" style="color: var(--accent-color);">View Projects &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-20" style="background-color: var(--bg-light);">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title text-3xl font-bold text-center mb-16 text-white">Technical Skills</h2>
+                <div class="max-w-5xl mx-auto">
+                     <div class="mb-12">
+                        <h3 class="text-xl font-semibold text-center mb-8 text-white">Cloud & DevOps</h3>
+                        <div class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-8 text-center">
+                            <div class="skill-badge"><i class="fab fa-aws fa-3x mb-2"></i><p>AWS</p></div>
+                            <div class="skill-badge"><i class="fab fa-docker fa-3x mb-2"></i><p>Docker</p></div>
+                            <div class="skill-badge"><i class="fas fa-cubes fa-3x mb-2"></i><p>Kubernetes</p></div>
+                            <div class="skill-badge"><i class="fab fa-jenkins fa-3x mb-2"></i><p>Jenkins</p></div>
+                            <div class="skill-badge"><i class="fas fa-cogs fa-3x mb-2"></i><p>Terraform</p></div>
+                            <div class="skill-badge"><i class="fab fa-git-alt fa-3x mb-2"></i><p>Git</p></div>
+                        </div>
+                    </div>
+                     <div>
+                        <h3 class="text-xl font-semibold text-center mb-8 text-white">Data & Programming</h3>
+                        <div class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-8 text-center">
+                            <div class="skill-badge"><i class="fab fa-python fa-3x mb-2"></i><p>Python</p></div>
+                            <div class="skill-badge"><i class="fas fa-database fa-3x mb-2"></i><p>SQL</p></div>
+                            <div class="skill-badge"><i class="fas fa-table fa-3x mb-2"></i><p>Pandas</p></div>
+                            <div class="skill-badge"><i class="fas fa-chart-line fa-3x mb-2"></i><p>Seaborn</p></div>
+                            <div class="skill-badge"><i class="fas fa-chart-bar fa-3x mb-2"></i><p>Power BI</p></div>
+                            <div class="skill-badge"><i class="fas fa-terminal fa-3x mb-2"></i><p>Shell</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20" style="background-color: var(--bg-light);">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title text-3xl font-bold text-center mb-12 text-white">Get In Touch</h2>
+                <div class="max-w-lg mx-auto text-center">
+                     <p class="text-lg mb-8" style="color: var(--text-secondary);">I'm open to new opportunities and collaborations. Feel free to reach out!</p>
+                     <form action="mailto:ganga.auji2001@gmail.com" method="post" enctype="text/plain" class="w-full">
+                         <div class="flex flex-col md:flex-row gap-4 mb-4">
+                             <input type="text" name="name" placeholder="Your Name" class="w-full p-3 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)]" style="background-color: var(--bg-dark); border: 1px solid var(--border-color);" required>
+                             <input type="email" name="email" placeholder="Your Email" class="w-full p-3 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)]" style="background-color: var(--bg-dark); border: 1px solid var(--border-color);" required>
+                         </div>
+                         <textarea name="message" placeholder="Your Message" rows="5" class="w-full p-3 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)] mb-4" style="background-color: var(--bg-dark); border: 1px solid var(--border-color);" required></textarea>
+                         <button type="submit" class="btn-primary font-semibold px-8 py-3 rounded-md w-full">Send Message</button>
+                     </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-8" style="background-color: var(--bg-dark); border-top: 1px solid var(--border-color);">
+        <div class="container mx-auto px-6 text-center">
+            <div class="flex justify-center space-x-6 mb-4">
+                <a href="#" class="hover:text-white" style="color: var(--text-secondary);"><i class="fab fa-linkedin fa-2x"></i></a>
+                <a href="#" class="hover:text-white" style="color: var(--text-secondary);"><i class="fab fa-github fa-2x"></i></a>
+                <a href="#" class="hover:text-white" style="color: var(--text-secondary);"><i class="fab fa-twitter fa-2x"></i></a>
+            </div>
+            <p style="color: var(--text-secondary);">&copy; 2024 Ganga Auji. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- Mobile Menu Toggle ---
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // --- Project Filtering ---
+        const tabs = document.querySelectorAll('.tab-button');
+        const projects = document.querySelectorAll('.project-card');
+        const projectTabsContainer = document.getElementById('project-tabs');
+
+        projectTabsContainer.addEventListener('click', (e) => {
+            if (e.target.tagName === 'BUTTON') {
+                const filter = e.target.getAttribute('data-filter');
+                tabs.forEach(tab => tab.classList.remove('active'));
+                e.target.classList.add('active');
+
+                projects.forEach(project => {
+                    const category = project.getAttribute('data-category');
+                    if (filter === 'all' || filter === category) {
+                        project.style.display = 'block';
+                    } else {
+                        project.style.display = 'none';
+                    }
+                });
+            }
+        });
+
+        // --- Smooth scrolling for anchor links ---
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetElement = document.querySelector(this.getAttribute('href'));
+                if(targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>
