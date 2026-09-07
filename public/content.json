@@ -1,0 +1,524 @@
+{
+  "profile": {
+    "name": "Ishaan Auji",
+    "title": "DevOps Engineer",
+    "subtitle": "Cloud Infrastructure & Automation",
+    "location": "Vashi, Navi Mumbai, India",
+    "email": "ganga.auji2001@gmail.com",
+    "phone": "+91 8879766051",
+    "linkedin": "https://www.linkedin.com/in/ganga-auji-426a911ba",
+    "github": "https://github.com/GangaAuji",
+    "resumeUrl": "/resume.pdf",
+    "resumeFileName": "Ganga-Auji-Resume.pdf",
+    "availability": "Open to DevOps, Cloud, and Infrastructure roles",
+    "tagline": "I operate production infrastructure and automate the path from git to running systems — AWS, Linux, CI/CD, and reliable deployments.",
+    "about": {
+      "intro": "DevOps Engineer serving as the sole deployment and infrastructure engineer for a software company's flagship product — a government-focused eHRMS platform (attendance, leave, and payroll) — live across 15+ client environments, alongside 250+ client websites.",
+      "focus": "I built deployment automation that cut server setup from hours to minutes, introduced CI/CD where none existed, and independently diagnosed and resolved a recurring production database failure. AWS Certified Cloud Practitioner, currently pursuing AWS Solutions Architect Associate.",
+      "points": [
+        "Sole deployment engineer for a live eHRMS platform across 15+ client environments",
+        "250+ client websites, 15 Ubuntu servers, and 200+ domains under operational ownership",
+        "Deployment time reduced from 2–3 hours to approximately 30 minutes",
+        "GitLab CI/CD, production alerting, automated backups, and incident response"
+      ]
+    },
+    "contactCta": "Let's build reliable infrastructure.",
+    "contactNote": "If you need someone who can own servers, pipelines, and production incidents — not just talk about them — let's talk."
+  },
+  "metrics": [
+    {
+      "id": "environments",
+      "value": 15,
+      "suffix": "+",
+      "label": "Client Environments",
+      "detail": "eHRMS platform live in production"
+    },
+    {
+      "id": "websites",
+      "value": 250,
+      "suffix": "+",
+      "label": "Websites",
+      "detail": "Client websites supported in production"
+    },
+    {
+      "id": "servers",
+      "value": 15,
+      "suffix": "",
+      "label": "Ubuntu Servers",
+      "detail": "Linux hosts administered and maintained"
+    },
+    {
+      "id": "domains",
+      "value": 200,
+      "suffix": "+",
+      "label": "Domains",
+      "detail": "DNS, Cloudflare, and cPanel ownership"
+    }
+  ],
+  "impactHighlights": [
+    {
+      "id": "deploy-time",
+      "title": "Faster deployments",
+      "text": "Bash automation reduced full application deployment from 2–3 hours to approximately 30 minutes."
+    },
+    {
+      "id": "cicd",
+      "title": "CI/CD from zero",
+      "text": "Introduced GitLab CI/CD in an environment that previously had no automated deployment."
+    },
+    {
+      "id": "incidents",
+      "title": "Production reliability",
+      "text": "Diagnosed a recurring MySQL crash, migrated corrupted data, and added Teams/email alerting."
+    }
+  ],
+  "experience": [
+    {
+      "id": "gordinateur-devops",
+      "role": "DevOps Engineer",
+      "company": "Gordinateur Pvt. Ltd.",
+      "location": "India",
+      "startDate": "2025-07",
+      "endDate": "",
+      "current": true,
+      "description": "Sole deployment and infrastructure engineer for the company's flagship government-focused eHRMS platform (attendance, leave, and payroll), alongside a large client web hosting estate.",
+      "achievements": [
+        "Serve as the sole deployment engineer for an eHRMS platform live across 15+ client environments, alongside 250+ client websites",
+        "Built a Bash automation script that reduced full application deployment — domain mapping, Nginx/Apache virtual host configuration, directory setup, Git and database configuration — from 2–3 hours to approximately 30 minutes",
+        "Introduced GitLab CI/CD for the development environment where none previously existed, letting developers push code directly to automatic deployment",
+        "Diagnosed a recurring MySQL crash that repeatedly took the development server offline by isolating a corrupted database table; backed up and migrated the data to a new table",
+        "Built a production alerting system using Microsoft Teams and email webhooks, closing a gap where no server alerting had previously existed",
+        "Manage 15 Ubuntu servers and 200+ client domains — DNS, Cloudflare (DNS, security, VPN), and cPanel deployments across Hostinger and Bigrock — with automated database backups to local storage and AWS S3"
+      ],
+      "technologies": [
+        "Linux",
+        "Ubuntu",
+        "Nginx",
+        "Apache",
+        "GitLab CI/CD",
+        "MySQL",
+        "AWS S3",
+        "Cloudflare",
+        "Bash"
+      ]
+    },
+    {
+      "id": "magic-bus-aws-restart",
+      "role": "AWS re/Start Program Intern",
+      "company": "Magic Bus India Foundation",
+      "location": "Thane, Maharashtra, India",
+      "startDate": "2024-09",
+      "endDate": "2024-12",
+      "current": false,
+      "description": "Hands-on AWS infrastructure, CI/CD, and cloud operations applied to simulated production workloads.",
+      "achievements": [
+        "Designed and deployed a scalable AWS cloud architecture (EC2, S3, RDS) with Auto Scaling groups and Elastic Load Balancers",
+        "Built CI/CD automation using AWS CodePipeline/CodeBuild and serverless workflows with Lambda/DynamoDB",
+        "Configured VPC networking, security groups, and IAM policies per AWS security best practices"
+      ],
+      "technologies": [
+        "AWS",
+        "EC2",
+        "S3",
+        "RDS",
+        "Lambda",
+        "DynamoDB",
+        "VPC",
+        "IAM",
+        "CodePipeline",
+        "CodeBuild"
+      ]
+    },
+    {
+      "id": "one-point-one-it",
+      "role": "IT Support Executive",
+      "company": "One Point One Solutions Ltd",
+      "location": "India",
+      "startDate": "2022-11",
+      "endDate": "2024-02",
+      "current": false,
+      "description": "Level-1/Level-2 hardware, networking, and software support, including server backups and device health monitoring.",
+      "achievements": [
+        "Resolved approximately 60 hardware, networking, and software tickets weekly (Level-1/Level-2)",
+        "Provided direct, non-ticketed support to senior leadership across departments",
+        "Ran server backups, antivirus monitoring, and device health checks"
+      ],
+      "technologies": [
+        "Hardware",
+        "Networking",
+        "Windows",
+        "Backups"
+      ]
+    }
+  ],
+  "skillGroups": [
+    {
+      "id": "cloud",
+      "title": "Cloud / AWS",
+      "items": [
+        {
+          "name": "EC2",
+          "icon": "aws"
+        },
+        {
+          "name": "S3",
+          "icon": "aws"
+        },
+        {
+          "name": "RDS",
+          "icon": "database"
+        },
+        {
+          "name": "Lambda",
+          "icon": "cloud"
+        },
+        {
+          "name": "VPC",
+          "icon": "network"
+        },
+        {
+          "name": "IAM",
+          "icon": "shield"
+        },
+        {
+          "name": "CloudWatch",
+          "icon": "monitor"
+        },
+        {
+          "name": "CloudTrail",
+          "icon": "monitor"
+        },
+        {
+          "name": "DynamoDB",
+          "icon": "database"
+        },
+        {
+          "name": "ECS",
+          "icon": "cloud"
+        },
+        {
+          "name": "Identity Center",
+          "icon": "shield"
+        }
+      ]
+    },
+    {
+      "id": "cicd",
+      "title": "CI/CD",
+      "items": [
+        {
+          "name": "GitLab CI/CD",
+          "icon": "pipeline"
+        },
+        {
+          "name": "AWS CodePipeline",
+          "icon": "pipeline"
+        },
+        {
+          "name": "CodeBuild",
+          "icon": "build"
+        },
+        {
+          "name": "CodeDeploy",
+          "icon": "rocket"
+        },
+        {
+          "name": "GitHub Actions",
+          "icon": "github"
+        },
+        {
+          "name": "Jenkins",
+          "icon": "jenkins"
+        }
+      ]
+    },
+    {
+      "id": "iac",
+      "title": "Infrastructure as Code",
+      "items": [
+        {
+          "name": "Terraform",
+          "icon": "terraform"
+        },
+        {
+          "name": "AWS CloudFormation",
+          "icon": "aws"
+        }
+      ]
+    },
+    {
+      "id": "hosting",
+      "title": "Web & Hosting",
+      "items": [
+        {
+          "name": "Nginx",
+          "icon": "network"
+        },
+        {
+          "name": "Apache",
+          "icon": "network"
+        },
+        {
+          "name": "Webmin/Virtualmin",
+          "icon": "linux"
+        },
+        {
+          "name": "Hostinger cPanel",
+          "icon": "cloud"
+        },
+        {
+          "name": "Bigrock cPanel",
+          "icon": "cloud"
+        }
+      ]
+    },
+    {
+      "id": "security",
+      "title": "Security & Networking",
+      "items": [
+        {
+          "name": "IAM Roles & Policies",
+          "icon": "shield"
+        },
+        {
+          "name": "VPC",
+          "icon": "network"
+        },
+        {
+          "name": "SSH/SSL",
+          "icon": "lock"
+        },
+        {
+          "name": "DNS",
+          "icon": "network"
+        },
+        {
+          "name": "Cloudflare",
+          "icon": "shield"
+        },
+        {
+          "name": "TCP/IP",
+          "icon": "network"
+        }
+      ]
+    },
+    {
+      "id": "monitoring",
+      "title": "Monitoring & Observability",
+      "items": [
+        {
+          "name": "AWS CloudWatch",
+          "icon": "monitor"
+        },
+        {
+          "name": "CloudTrail",
+          "icon": "monitor"
+        },
+        {
+          "name": "Teams/email webhooks",
+          "icon": "alert"
+        }
+      ]
+    },
+    {
+      "id": "databases",
+      "title": "Databases",
+      "items": [
+        {
+          "name": "MySQL",
+          "icon": "database"
+        },
+        {
+          "name": "DynamoDB",
+          "icon": "database"
+        },
+        {
+          "name": "SQL",
+          "icon": "database"
+        }
+      ]
+    },
+    {
+      "id": "scripting",
+      "title": "Scripting & Languages",
+      "items": [
+        {
+          "name": "Python",
+          "icon": "python"
+        },
+        {
+          "name": "Shell/Bash",
+          "icon": "terminal"
+        },
+        {
+          "name": "SQL",
+          "icon": "database"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "id": "timetable",
+      "title": "Smart Timetable & Attendance Management System",
+      "description": "Full-stack timetable management system with a mobile app for student attendance via face recognition, featuring offline-first sync APIs, UUID-based deduplication, role-based access control (RBAC), and audit logging.",
+      "technologies": [
+        "Python",
+        "Flask",
+        "MySQL",
+        "OpenCV",
+        "Mobile App"
+      ],
+      "category": "Platform Engineering",
+      "github": "https://github.com/GangaAuji/TimetableManagement",
+      "liveDemo": "",
+      "featured": true
+    },
+    {
+      "id": "personal-cicd",
+      "title": "Personal Website CI/CD & Infrastructure Automation",
+      "description": "Automated deployment and infrastructure provisioning for personal websites using AWS CI/CD services and CloudFormation triggered by GitHub Actions, enforcing least-privilege IAM roles with version-controlled, reproducible environments.",
+      "technologies": [
+        "AWS CodePipeline",
+        "CodeDeploy",
+        "CodeCommit",
+        "CloudFormation",
+        "GitHub Actions",
+        "IAM",
+        "EC2",
+        "S3"
+      ],
+      "category": "DevOps / IaC",
+      "github": "",
+      "liveDemo": "",
+      "featured": true
+    }
+  ],
+  "certifications": [
+    {
+      "id": "aws-saa",
+      "title": "AWS Certified Solutions Architect – Associate",
+      "issuer": "Amazon Web Services",
+      "date": "",
+      "status": "in-progress",
+      "credentialUrl": "",
+      "summary": "In progress."
+    },
+    {
+      "id": "aws-ccp",
+      "title": "AWS Certified Cloud Practitioner",
+      "issuer": "Amazon Web Services",
+      "date": "2025-01",
+      "status": "completed",
+      "credentialUrl": "https://www.credly.com/badges/7df83aff-b7a4-450e-9c08-a76395ca2410",
+      "summary": "Foundational AWS cloud, security, billing, and architecture concepts."
+    },
+    {
+      "id": "aws-restart",
+      "title": "AWS re/Start Graduate",
+      "issuer": "Amazon Web Services",
+      "date": "2024-12",
+      "status": "completed",
+      "credentialUrl": "https://www.credly.com/badges/27440faa-3359-4e42-99de-936efd3d63d4",
+      "summary": "Hands-on cloud operations program covering Linux, networking, and AWS services."
+    },
+    {
+      "id": "sql-udemy",
+      "title": "SQL for Data Analytics",
+      "issuer": "Udemy",
+      "date": "",
+      "status": "completed",
+      "credentialUrl": "",
+      "summary": "SQL for data analytics."
+    }
+  ],
+  "education": [
+    {
+      "id": "msc-data-analytics",
+      "degree": "M.Sc. Data Analytics",
+      "institution": "Pillai College of Arts, Commerce & Science",
+      "location": "Navi Mumbai, Maharashtra, India",
+      "startDate": "2024-06",
+      "endDate": "2026-04",
+      "status": "Expected",
+      "notes": "Postgraduate study in data analytics alongside cloud and infrastructure work."
+    },
+    {
+      "id": "bsc-computer-science",
+      "degree": "B.Sc. Computer Science",
+      "institution": "Pillai College of Arts, Commerce & Science",
+      "location": "Navi Mumbai, Maharashtra, India",
+      "startDate": "2020",
+      "endDate": "2023",
+      "status": "",
+      "notes": ""
+    }
+  ],
+  "speaking": [
+    {
+      "id": "cloud-devops-workshop",
+      "title": "Cloud Computing & DevOps Workshop",
+      "role": "Guest speaker",
+      "audience": "30+ students",
+      "duration": "2 hours",
+      "recognition": "Formal letter of appreciation as guest speaker",
+      "summary": "Delivered a 2-hour workshop on Cloud Computing & DevOps to 30+ students."
+    },
+    {
+      "id": "cybersecurity-crash-course",
+      "title": "Cybersecurity Crash Course",
+      "role": "Trainer",
+      "audience": "20+ students",
+      "duration": "2 months",
+      "recognition": "",
+      "summary": "Conducted a 2-month Cybersecurity crash course for 20+ students."
+    }
+  ],
+  "navigation": [
+    {
+      "id": "home",
+      "label": "Home",
+      "href": "/"
+    },
+    {
+      "id": "about",
+      "label": "About",
+      "href": "/about"
+    },
+    {
+      "id": "experience",
+      "label": "Experience",
+      "href": "/experience"
+    },
+    {
+      "id": "skills",
+      "label": "Skills",
+      "href": "/skills"
+    },
+    {
+      "id": "projects",
+      "label": "Projects",
+      "href": "/projects"
+    },
+    {
+      "id": "certifications",
+      "label": "Certifications",
+      "href": "/certifications"
+    },
+    {
+      "id": "education",
+      "label": "Education",
+      "href": "/education"
+    },
+    {
+      "id": "speaking",
+      "label": "Speaking",
+      "href": "/speaking"
+    },
+    {
+      "id": "contact",
+      "label": "Contact",
+      "href": "/contact"
+    }
+  ]
+}

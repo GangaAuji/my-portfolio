@@ -1,0 +1,6 @@
+Place your resume PDF here and name it:
+
+  resume.pdf
+
+The Download Resume button reads this path from src/data/profile.js
+(`resumeUrl`). After adding the file, rebuild or refresh the site.
