@@ -27,12 +27,21 @@ const PORT = Number(process.env.PORT || 4174);
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "ChangeMe@2026";
 const TOKEN_SECRET = process.env.ADMIN_SECRET || "portfolio-admin-secret";
 
-const upload = multer({
+const resumeUpload = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: 12 * 1024 * 1024 },
   fileFilter: (_req, file, cb) => {
     const ok = /\.(pdf|docx)$/i.test(file.originalname);
     cb(ok ? null : new Error("Only PDF or DOCX files are allowed"), ok);
+  },
+});
+
+const mediaUpload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 8 * 1024 * 1024 },
+  fileFilter: (_req, file, cb) => {
+    const ok = /\.(png|svg|webp|jpe?g|gif)$/i.test(file.originalname);
+    cb(ok ? null : new Error("Use PNG, SVG, WebP, JPG, or GIF"), ok);
   },
 });
 
@@ -69,7 +78,7 @@ app.post("/api/content", requireAuth, (req, res) => {
   }
 });
 
-app.post("/api/resume", requireAuth, upload.single("file"), (req, res) => {
+app.post("/api/resume", requireAuth, resumeUpload.single("file"), (req, res) => {
   if (!req.file) {
     res.status(400).json({ error: "Choose a PDF or DOCX file" });
     return;
@@ -91,6 +100,29 @@ app.post("/api/resume", requireAuth, upload.single("file"), (req, res) => {
     resumeUrl: content.profile.resumeUrl,
     resumeFileName: content.profile.resumeFileName,
   });
+});
+
+app.post("/api/media", requireAuth, mediaUpload.single("file"), (req, res) => {
+  if (!req.file) {
+    res.status(400).json({ error: "Choose an image file" });
+    return;
+  }
+
+  const slot = String(req.body?.slot || "");
+  const rel = slotToRelPath(slot, path.extname(req.file.originalname).toLowerCase());
+  if (!rel) {
+    res.status(400).json({ error: "Unknown image slot" });
+    return;
+  }
+
+  const abs = path.join(publicDir, rel);
+  mkdirSync(path.dirname(abs), { recursive: true });
+  writeFileSync(abs, req.file.buffer);
+
+  const content = readContent();
+  content.media = { ...(content.media || {}), [slot]: `/${rel.replace(/\\/g, "/")}?v=${Date.now()}` };
+  writeContent(content);
+  res.json({ slot, url: content.media[slot] });
 });
 
 app.use(express.static(publicDir));
@@ -162,6 +194,7 @@ function sanitizeContent(input) {
     ...current,
     ...input,
     profile: { ...current.profile, ...(input.profile || {}) },
+    media: { ...(current.media || {}), ...(input.media || {}) },
   };
 }
 
@@ -197,6 +230,23 @@ function secureEqual(a, b) {
   const left = scryptSync(String(a), TOKEN_SECRET, 32);
   const right = scryptSync(String(b), TOKEN_SECRET, 32);
   return timingSafeEqual(left, right);
+}
+
+function slotToRelPath(slot, ext) {
+  const allowed = new Set([".png", ".svg", ".webp", ".jpg", ".jpeg", ".gif"]);
+  if (!allowed.has(ext)) return null;
+  if (slot === "profile") return path.join("assets", "profile", `photo${ext}`);
+  if (slot === "hero") return path.join("assets", "hero", `infrastructure${ext}`);
+  const match = /^(company|institution|project|issuer|skill):([a-z0-9._-]+)$/i.exec(slot);
+  if (!match) return null;
+  const folder = {
+    company: "companies",
+    institution: "institutions",
+    project: "projects",
+    issuer: "issuers",
+    skill: "skills",
+  }[match[1]];
+  return path.join("assets", folder, `${match[2]}${ext}`);
 }
 
 function loadEnv(file) {

@@ -7,11 +7,7 @@ export function Skills() {
 
   return (
     <section className="section">
-      <SectionHeading
-        eyebrow="03 / Skills"
-        title="The operating stack"
-        description="Grouped by how the work is done — not arbitrary proficiency bars."
-      />
+      <SectionHeading title="Proficiency" />
       <div className="skills-grid">
         {content.skillGroups.map((group) => (
           <SkillGroup key={group.id} group={group} />

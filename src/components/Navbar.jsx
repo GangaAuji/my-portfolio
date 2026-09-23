@@ -1,17 +1,21 @@
 import { useEffect, useId, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
+import { PRIMARY_NAV } from "../data/primaryNav";
 import { useContent } from "../context/useContent";
+import { useTheme } from "../hooks/useTheme";
+import { MediaImage } from "./MediaImage";
 import { useCompactNav } from "../hooks/useScroll";
+import { Button } from "./Button";
 import { Icon } from "./Icon";
 import { ThemeToggle } from "./ThemeToggle";
 
-export function Navbar({ theme, onToggleTheme }) {
+export function Navbar() {
   const [open, setOpen] = useState(false);
   const compact = useCompactNav();
   const menuId = useId();
   const location = useLocation();
   const { content } = useContent();
-  const navigation = content.navigation || [];
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     setOpen(false);
@@ -28,13 +32,14 @@ export function Navbar({ theme, onToggleTheme }) {
 
   return (
     <header className={`site-header ${compact ? "is-compact" : ""}`}>
-      <div className="nav-wrap">
+      <div className="page-wrap nav-wrap">
         <NavLink to="/" className="brand" onClick={close}>
+          <MediaImage slot="profile" alt="" className="brand-photo" />
           {content.profile.name}
         </NavLink>
 
         <nav className="desktop-nav" aria-label="Primary">
-          {navigation.map((item) => (
+          {PRIMARY_NAV.map((item) => (
             <NavLink
               key={item.id}
               to={item.href}
@@ -47,7 +52,10 @@ export function Navbar({ theme, onToggleTheme }) {
         </nav>
 
         <div className="nav-actions">
-          <ThemeToggle theme={theme} onToggle={onToggleTheme} />
+          <ThemeToggle theme={theme} onToggle={toggleTheme} />
+          <Button href="/contact" className="btn-contact">
+            Contact
+          </Button>
           <button
             type="button"
             className="menu-button"
@@ -62,8 +70,8 @@ export function Navbar({ theme, onToggleTheme }) {
       </div>
 
       <div id={menuId} className={`mobile-nav ${open ? "is-open" : ""}`} hidden={!open}>
-        <nav aria-label="Mobile">
-          {navigation.map((item) => (
+        <nav className="page-wrap" aria-label="Mobile">
+          {PRIMARY_NAV.map((item) => (
             <NavLink
               key={item.id}
               to={item.href}
@@ -74,6 +82,9 @@ export function Navbar({ theme, onToggleTheme }) {
               {item.label}
             </NavLink>
           ))}
+          <Button href="/contact" className="btn-contact" onClick={close}>
+            Contact
+          </Button>
         </nav>
       </div>
     </header>

@@ -3,11 +3,10 @@ import { useEffect, useState } from "react";
 const STORAGE_KEY = "portfolio-theme";
 
 function getPreferredTheme() {
-  if (typeof window === "undefined") return "dark";
+  if (typeof window === "undefined") return "light";
   const stored = window.localStorage.getItem(STORAGE_KEY);
   if (stored === "light" || stored === "dark") return stored;
-  if (window.matchMedia("(prefers-color-scheme: light)").matches) return "light";
-  return "dark";
+  return "light";
 }
 
 export function useTheme() {

@@ -1,0 +1,42 @@
+Put downloaded files in these folders. PNG, SVG, WebP, or JPG all work if the filename matches (no extension in the list below).
+
+PROFILE (optional)
+  public/assets/profile/photo.png
+
+HERO illustration (isometric cloud / CI/CD / servers)
+  public/assets/hero/infrastructure.png
+  Search: "isometric cloud infrastructure illustration" or Storyset / unDraw / Freepik isometric DevOps
+
+COMPANY LOGOS (Experience timeline)
+  public/assets/companies/gordinateur.png     Gordinateur Pvt. Ltd.
+  public/assets/companies/magic-bus.png       Magic Bus India Foundation
+  public/assets/companies/one-point-one.png   One Point One Solutions Ltd.
+
+COLLEGE LOGO (Education)
+  public/assets/institutions/pillai.png       Pillai College of Arts, Commerce & Science
+
+CERT ISSUERS
+  public/assets/issuers/aws.png               Amazon Web Services
+  public/assets/issuers/udemy.png             Udemy
+
+PROJECT THUMBNAILS (1200x720 recommended)
+  public/assets/projects/timetable.png        Smart Timetable & Attendance
+  public/assets/projects/personal-cicd.png    Personal Website CI/CD
+
+SKILL / TECH ICONS (Simple Icons: https://simpleicons.org)
+  public/assets/skills/aws.svg
+  public/assets/skills/python.svg
+  public/assets/skills/jenkins.svg
+  public/assets/skills/terraform.svg
+  public/assets/skills/github.svg
+  public/assets/skills/linux.svg
+  public/assets/skills/ubuntu.svg
+  public/assets/skills/mysql.svg
+  public/assets/skills/docker.svg
+  public/assets/skills/kubernetes.svg
+  public/assets/skills/gitlab.svg
+  public/assets/skills/nginx.svg
+  public/assets/skills/cloudflare.svg
+
+Until a file is present, the site keeps the current SVG fallback.
+After adding files, refresh the browser. No code change needed.

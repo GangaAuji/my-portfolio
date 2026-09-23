@@ -8,8 +8,7 @@ export function Speaking() {
   return (
     <section className="section">
       <SectionHeading
-        eyebrow="07 / Speaking & Training"
-        title="Teaching the practice, not just the tools"
+        title="Speaking & Training"
         description="Workshops and crash courses delivered as a trainer."
       />
       <div className="speaking-grid">

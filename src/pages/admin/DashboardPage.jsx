@@ -1,9 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import { saveContent, uploadResume } from "../../api/client";
+import { saveContent, uploadMedia, uploadResume } from "../../api/client";
 import { Icon, TechIcon } from "../../components/Icon";
 import { useContent } from "../../context/useContent";
+import { useTheme } from "../../hooks/useTheme";
+import { issuerSlotFor } from "../../data/mediaSlots";
+import { ThemeToggle } from "../../components/ThemeToggle";
 import { AdminAvatar, InsightRail, OverviewBoard } from "./AdminWidgets";
+import { MediaEditor } from "./MediaEditor";
+import { MediaUpload } from "./MediaUpload";
 import { clearAdminToken, getAdminToken } from "./LoginPage";
 
 const TABS = [
@@ -16,6 +21,7 @@ const TABS = [
   { id: "certifications", label: "Certifications", icon: "award" },
   { id: "education", label: "Education", icon: "education" },
   { id: "speaking", label: "Speaking", icon: "mic" },
+  { id: "media", label: "Images", icon: "image" },
   { id: "resume", label: "Resume", icon: "file" },
 ];
 
@@ -66,6 +72,7 @@ export function DashboardPage() {
   const token = getAdminToken();
   const navigate = useNavigate();
   const { content, setContent, refresh } = useContent();
+  const { theme, toggleTheme } = useTheme();
   const [tab, setTab] = useState("profile");
   const [draft, setDraft] = useState(() => structuredClone(content));
   const [status, setStatus] = useState("");
@@ -97,6 +104,25 @@ export function DashboardPage() {
       setDraft(saved);
       setContent(saved);
       setStatus("Saved. Public pages now use this content.");
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function onMedia(slot, file) {
+    setBusy(true);
+    setError("");
+    try {
+      const result = await uploadMedia(token, slot, file);
+      const next = {
+        ...draft,
+        media: { ...(draft.media || {}), [slot]: result.url },
+      };
+      setDraft(next);
+      await persist(next);
+      setStatus("Image uploaded and live on the public site.");
     } catch (err) {
       setError(err.message);
     } finally {
@@ -165,6 +191,10 @@ export function DashboardPage() {
           })}
         </nav>
         <div className="admin-side-footer">
+          <div className="admin-theme-row">
+            <span>Theme</span>
+            <ThemeToggle theme={theme} onToggle={toggleTheme} />
+          </div>
           <Link to="/" className="admin-back">
             <Icon name="globe" size={18} />
             Manage Public Site
@@ -196,7 +226,15 @@ export function DashboardPage() {
         <div className="admin-workspace">
           <div className="admin-workspace-main">
             {tab === "dashboard" ? <OverviewBoard content={draft} onOpen={setTab} /> : null}
-            {tab === "profile" ? <ProfileEditor profile={draft.profile} onChange={(profile) => setDraft({ ...draft, profile })} /> : null}
+            {tab === "profile" ? (
+              <ProfileEditor
+                profile={draft.profile}
+                media={draft.media}
+                onChange={(profile) => setDraft({ ...draft, profile })}
+                onMedia={onMedia}
+                busy={busy}
+              />
+            ) : null}
             {tab === "metrics" ? (
               <ArrayEditor
                 items={draft.metrics}
@@ -208,32 +246,46 @@ export function DashboardPage() {
             {tab === "experience" ? (
               <ExperienceEditor
                 items={draft.experience}
+                media={draft.media}
                 onChange={(experience) => setDraft({ ...draft, experience })}
+                onMedia={onMedia}
+                busy={busy}
               />
             ) : null}
             {tab === "skills" ? (
               <SkillsEditor
                 groups={draft.skillGroups}
+                media={draft.media}
                 onChange={(skillGroups) => setDraft({ ...draft, skillGroups })}
+                onMedia={onMedia}
+                busy={busy}
               />
             ) : null}
             {tab === "projects" ? (
-              <ProjectsEditor items={draft.projects} onChange={(projects) => setDraft({ ...draft, projects })} />
+              <ProjectsEditor
+                items={draft.projects}
+                media={draft.media}
+                onChange={(projects) => setDraft({ ...draft, projects })}
+                onMedia={onMedia}
+                busy={busy}
+              />
             ) : null}
             {tab === "certifications" ? (
-              <ArrayEditor
+              <CertificationsEditor
                 items={draft.certifications}
-                blank={{ id: id(), title: "", issuer: "", date: "", status: "completed", credentialUrl: "", summary: "" }}
+                media={draft.media}
                 onChange={(certifications) => setDraft({ ...draft, certifications })}
-                fields={["title", "issuer", "date", "status", "credentialUrl", "summary"]}
+                onMedia={onMedia}
+                busy={busy}
               />
             ) : null}
             {tab === "education" ? (
-              <ArrayEditor
+              <EducationEditor
                 items={draft.education}
-                blank={{ id: id(), degree: "", institution: "", location: "", startDate: "", endDate: "", status: "", notes: "" }}
+                media={draft.media}
                 onChange={(education) => setDraft({ ...draft, education })}
-                fields={["degree", "institution", "location", "startDate", "endDate", "status", "notes"]}
+                onMedia={onMedia}
+                busy={busy}
               />
             ) : null}
             {tab === "speaking" ? (
@@ -244,6 +296,7 @@ export function DashboardPage() {
                 fields={["title", "role", "audience", "duration", "recognition", "summary"]}
               />
             ) : null}
+            {tab === "media" ? <MediaEditor content={draft} onUpload={onMedia} busy={busy} /> : null}
             {tab === "resume" ? (
               <div className="admin-card">
                 <h3>Resume file</h3>
@@ -264,7 +317,7 @@ export function DashboardPage() {
   );
 }
 
-function ProfileEditor({ profile, onChange }) {
+function ProfileEditor({ profile, onChange, media, onMedia, busy }) {
   const about = profile.about || { intro: "", focus: "", points: [] };
   const set = (key, value) => onChange({ ...profile, [key]: value });
 
@@ -273,13 +326,21 @@ function ProfileEditor({ profile, onChange }) {
       <article className="admin-card">
         <h3>Basic Info</h3>
         <div className="admin-basic-info">
-          <AdminAvatar name={profile.name} size="lg" />
+          <div>
+            <AdminAvatar name={profile.name} size="lg" />
+            <MediaUpload slot="profile" label="Profile photo" url={media?.profile} onUpload={onMedia} busy={busy} />
+          </div>
           <div className="admin-field-grid">
             {["name", "title", "subtitle", "location"].map((key) => (
               <Field key={key} label={key} value={profile[key] || ""} onChange={(value) => set(key, value)} />
             ))}
           </div>
         </div>
+      </article>
+
+      <article className="admin-card">
+        <h3>Hero image</h3>
+        <MediaUpload slot="hero" label="Hero illustration" url={media?.hero} onUpload={onMedia} busy={busy} />
       </article>
 
       <article className="admin-card">
@@ -316,7 +377,7 @@ function ProfileEditor({ profile, onChange }) {
   );
 }
 
-function ExperienceEditor({ items, onChange }) {
+function ExperienceEditor({ items, onChange, media, onMedia, busy }) {
   return (
     <div className="admin-stack">
       {items.map((item, index) => (
@@ -327,6 +388,13 @@ function ExperienceEditor({ items, onChange }) {
               Remove
             </button>
           </header>
+          <MediaUpload
+            slot={`company:${item.id}`}
+            label="Company logo"
+            url={media?.[`company:${item.id}`]}
+            onUpload={onMedia}
+            busy={busy}
+          />
           <div className="admin-field-grid">
             {["role", "company", "location", "startDate", "endDate"].map((key) => (
               <Field key={key} label={key} value={item[key] || ""} onChange={(value) => update(items, onChange, index, key, value)} />
@@ -367,9 +435,37 @@ function ExperienceEditor({ items, onChange }) {
   );
 }
 
-function SkillsEditor({ groups, onChange }) {
+function SkillsEditor({ groups, onChange, media, onMedia, busy }) {
+  const icons = [];
+  const seen = new Set();
+  for (const group of groups || []) {
+    for (const item of group.items || []) {
+      if (!item.icon || seen.has(item.icon)) continue;
+      seen.add(item.icon);
+      icons.push({ icon: item.icon, name: item.name });
+    }
+  }
+
   return (
     <div className="admin-stack">
+      {icons.length ? (
+        <article className="admin-card">
+          <h3>Skill icons</h3>
+          <p className="muted">These appear next to each skill on the public Skills page.</p>
+          <div className="admin-media-grid">
+            {icons.map((item) => (
+              <MediaUpload
+                key={item.icon}
+                slot={`skill:${item.icon}`}
+                label={item.name || item.icon}
+                url={media?.[`skill:${item.icon}`]}
+                onUpload={onMedia}
+                busy={busy}
+              />
+            ))}
+          </div>
+        </article>
+      ) : null}
       {groups.map((group, index) => (
         <article key={group.id} className="admin-card">
           <header className="admin-card-head">
@@ -385,16 +481,22 @@ function SkillsEditor({ groups, onChange }) {
           }} />
           <Field
             label="skills"
-            value={(group.items || []).map((item) => `${item.name}|${item.icon}`).join("\n")}
+            value={(group.items || []).map((item) => {
+              const base = `${item.name}|${item.icon}`;
+              return item.level ? `${base}|${item.level}` : base;
+            }).join("\n")}
             multiline
-            hint="One per line as name|icon"
+            hint="One per line as name|icon. Optional: name|icon|level (0–100) for a bar."
             onChange={(value) => {
               const next = groups.slice();
               next[index] = {
                 ...group,
                 items: lines(value).map((line) => {
-                  const [name, icon = "cloud"] = line.split("|");
-                  return { name: name.trim(), icon: icon.trim() || "cloud" };
+                  const [name, icon = "cloud", level] = line.split("|");
+                  const parsed = { name: name.trim(), icon: icon.trim() || "cloud" };
+                  const amount = Number(level);
+                  if (Number.isFinite(amount) && amount > 0 && amount <= 100) parsed.level = amount;
+                  return parsed;
                 }),
               };
               onChange(next);
@@ -413,7 +515,7 @@ function SkillsEditor({ groups, onChange }) {
   );
 }
 
-function ProjectsEditor({ items, onChange }) {
+function ProjectsEditor({ items, onChange, media, onMedia, busy }) {
   return (
     <div className="admin-stack">
       {items.map((item, index) => (
@@ -424,6 +526,13 @@ function ProjectsEditor({ items, onChange }) {
               Remove
             </button>
           </header>
+          <MediaUpload
+            slot={`project:${item.id}`}
+            label="Project image"
+            url={media?.[`project:${item.id}`]}
+            onUpload={onMedia}
+            busy={busy}
+          />
           <div className="admin-field-grid">
             {["title", "category", "github", "liveDemo"].map((key) => (
               <Field key={key} label={key} value={item[key] || ""} onChange={(value) => update(items, onChange, index, key, value)} />
@@ -452,6 +561,80 @@ function ProjectsEditor({ items, onChange }) {
         onClick={() => onChange([...items, { id: id(), title: "", description: "", technologies: [], category: "", github: "", liveDemo: "", featured: false }])}
       >
         Add project
+      </button>
+    </div>
+  );
+}
+
+function CertificationsEditor({ items, onChange, media, onMedia, busy }) {
+  return (
+    <div className="admin-stack">
+      {items.map((item, index) => (
+        <article key={item.id} className="admin-card">
+          <header className="admin-card-head">
+            <h3>{item.title || "Certification"}</h3>
+            <button type="button" className="admin-remove" onClick={() => onChange(items.filter((_, i) => i !== index))}>
+              Remove
+            </button>
+          </header>
+          <MediaUpload
+            slot={issuerSlotFor(item)}
+            label="Issuer logo"
+            url={media?.[issuerSlotFor(item)]}
+            onUpload={onMedia}
+            busy={busy}
+          />
+          <div className="admin-field-grid">
+            {["title", "issuer", "date", "status", "credentialUrl"].map((key) => (
+              <Field key={key} label={key} value={item[key] || ""} onChange={(value) => update(items, onChange, index, key, value)} />
+            ))}
+          </div>
+          <Field label="summary" value={item.summary || ""} multiline onChange={(value) => update(items, onChange, index, "summary", value)} />
+        </article>
+      ))}
+      <button
+        type="button"
+        className="btn btn-secondary"
+        onClick={() => onChange([...items, { id: id(), title: "", issuer: "", date: "", status: "completed", credentialUrl: "", summary: "" }])}
+      >
+        Add certification
+      </button>
+    </div>
+  );
+}
+
+function EducationEditor({ items, onChange, media, onMedia, busy }) {
+  return (
+    <div className="admin-stack">
+      {items.map((item, index) => (
+        <article key={item.id} className="admin-card">
+          <header className="admin-card-head">
+            <h3>{item.degree || "Education"}</h3>
+            <button type="button" className="admin-remove" onClick={() => onChange(items.filter((_, i) => i !== index))}>
+              Remove
+            </button>
+          </header>
+          <MediaUpload
+            slot={`institution:${item.id}`}
+            label="Institution logo"
+            url={media?.[`institution:${item.id}`]}
+            onUpload={onMedia}
+            busy={busy}
+          />
+          <div className="admin-field-grid">
+            {["degree", "institution", "location", "startDate", "endDate", "status"].map((key) => (
+              <Field key={key} label={key} value={item[key] || ""} onChange={(value) => update(items, onChange, index, key, value)} />
+            ))}
+          </div>
+          <Field label="notes" value={item.notes || ""} multiline onChange={(value) => update(items, onChange, index, "notes", value)} />
+        </article>
+      ))}
+      <button
+        type="button"
+        className="btn btn-secondary"
+        onClick={() => onChange([...items, { id: id(), degree: "", institution: "", location: "", startDate: "", endDate: "", status: "", notes: "" }])}
+      >
+        Add education
       </button>
     </div>
   );
@@ -511,6 +694,7 @@ function tabCount(id, draft) {
   if (id === "education") return draft.education?.length || 0;
   if (id === "speaking") return draft.speaking?.length || 0;
   if (id === "resume") return draft.profile?.resumeUrl ? 1 : 0;
+  if (id === "media") return Object.keys(draft.media || {}).length;
   return 0;
 }
 

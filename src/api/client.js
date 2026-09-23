@@ -45,6 +45,20 @@ export async function saveContent(token, content) {
   return payload;
 }
 
+export async function uploadMedia(token, slot, file) {
+  const body = new FormData();
+  body.append("slot", slot);
+  body.append("file", file);
+  const response = await fetch("/api/media", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}` },
+    body,
+  });
+  const payload = await response.json();
+  if (!response.ok) throw new Error(payload.error || "Upload failed");
+  return payload;
+}
+
 export async function uploadResume(token, file) {
   const body = new FormData();
   body.append("file", file);

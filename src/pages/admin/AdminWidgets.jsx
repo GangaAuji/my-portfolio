@@ -8,7 +8,7 @@ const STACK = [
   { id: "python", label: "Python" },
 ];
 
-const LINE_COLORS = ["#2dd4c8", "#8b7cf6", "#fb923c", "#fbbf24", "#60a5fa"];
+const LINE_COLORS = ["#2563eb", "#3b82f6", "#0ea5e9", "#6366f1", "#94a3b8"];
 
 export function initialsFrom(name = "") {
   return name
@@ -146,13 +146,13 @@ function AreaChart({ points }) {
     <svg className="admin-chart" viewBox="0 0 320 140" role="img" aria-label="Portfolio snapshot from live metrics">
       <defs>
         <linearGradient id="admin-area" x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0%" stopColor="#2dd4c8" stopOpacity="0.35" />
-          <stop offset="100%" stopColor="#2dd4c8" stopOpacity="0" />
+          <stop offset="0%" stopColor="#2563eb" stopOpacity="0.35" />
+          <stop offset="100%" stopColor="#2563eb" stopOpacity="0" />
         </linearGradient>
       </defs>
       <path d={area} fill="url(#admin-area)" />
-      <path d={path} fill="none" stroke="#2dd4c8" strokeWidth="2.6" />
-      <circle cx={last.x} cy={last.y} r="5" fill="#2dd4c8" />
+      <path d={path} fill="none" stroke="#2563eb" strokeWidth="2.6" />
+      <circle cx={last.x} cy={last.y} r="5" fill="#2563eb" />
     </svg>
   );
 }

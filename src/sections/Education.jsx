@@ -7,12 +7,14 @@ export function Education() {
 
   return (
     <section className="section">
-      <SectionHeading eyebrow="06 / Education" title="Academic foundation" />
-      <div className="education-grid">
+      <SectionHeading title="Education" />
+      <ol className="story-timeline">
         {content.education.map((item) => (
-          <EducationCard key={item.id} item={item} />
+          <li key={item.id}>
+            <EducationCard item={item} />
+          </li>
         ))}
-      </div>
+      </ol>
     </section>
   );
 }

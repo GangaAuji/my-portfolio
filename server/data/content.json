@@ -520,5 +520,8 @@
       "label": "Contact",
       "href": "/contact"
     }
-  ]
+  ],
+  "media": {
+    "company:gordinateur-devops": "/assets/companies/gordinateur-devops.png?v=1788871189863"
+  }
 }

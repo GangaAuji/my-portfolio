@@ -1,5 +1,6 @@
 import { Badge } from "./Badge";
 import { Icon } from "./Icon";
+import { MediaImage } from "./MediaImage";
 
 function formatRange(startDate, endDate, current) {
   if (!startDate && !endDate && current) return "Current";
@@ -36,6 +37,12 @@ export function ExperienceCard({ item }) {
       </div>
       <h3>{item.role}</h3>
       <p className="experience-org">
+        <MediaImage
+          slot={`company:${item.id}`}
+          alt=""
+          className="brand-logo"
+          fallback={<span className="brand-logo is-fallback">{(item.company || "?").slice(0, 1)}</span>}
+        />
         {item.company ? <span>{item.company}</span> : null}
         {item.company && item.location ? <span aria-hidden="true"> · </span> : null}
         {item.location ? (

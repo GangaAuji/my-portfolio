@@ -9,29 +9,29 @@ export function Certifications() {
 
   return (
     <section className="section">
-      <SectionHeading
-        eyebrow="05 / Certifications"
-        title="Verified cloud credentials"
-        description="Completed certifications are shown separately from work still in progress."
-      />
+      <SectionHeading title="Certifications" />
       {inProgress.length ? (
         <div className="cert-block">
           <h3 className="cert-group-title">In progress</h3>
-          <div className="certs-grid">
+          <ol className="story-timeline">
             {inProgress.map((cert) => (
-              <CertificationCard key={cert.id} cert={cert} />
+              <li key={cert.id}>
+                <CertificationCard cert={cert} />
+              </li>
             ))}
-          </div>
+          </ol>
         </div>
       ) : null}
       {completed.length ? (
         <div className="cert-block">
           <h3 className="cert-group-title">Completed</h3>
-          <div className="certs-grid">
+          <ol className="story-timeline">
             {completed.map((cert) => (
-              <CertificationCard key={cert.id} cert={cert} />
+              <li key={cert.id}>
+                <CertificationCard cert={cert} />
+              </li>
             ))}
-          </div>
+          </ol>
         </div>
       ) : null}
     </section>

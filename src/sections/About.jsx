@@ -2,6 +2,7 @@ import { useContent } from "../context/useContent";
 import { MetricCard } from "../components/MetricCard";
 import { SectionHeading } from "../components/SectionHeading";
 import { Icon } from "../components/Icon";
+import { ResumeButton } from "../components/ResumeButton";
 
 export function About() {
   const { content } = useContent();
@@ -10,13 +11,15 @@ export function About() {
   return (
     <section className="section">
       <SectionHeading
-        eyebrow="01 / About"
-        title="Production infrastructure, owned end to end"
+        title="About"
         description={profile.about.intro}
       />
       <div className="about-grid">
         <div className="about-copy">
           <p>{profile.about.focus}</p>
+          <div className="hero-actions">
+            <ResumeButton />
+          </div>
           <ul className="focus-list">
             {profile.about.points.map((point) => (
               <li key={point}>

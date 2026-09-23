@@ -1,5 +1,6 @@
 import { useContent } from "../context/useContent";
 import { ExperienceCard } from "../components/ExperienceCard";
+import { ExperienceTimeline } from "../components/ExperienceTimeline";
 import { SectionHeading } from "../components/SectionHeading";
 
 export function Experience() {
@@ -7,18 +8,13 @@ export function Experience() {
 
   return (
     <section className="section">
-      <SectionHeading
-        eyebrow="02 / Experience"
-        title="Where the work actually runs"
-        description="Roles centered on production systems, cloud delivery, and operational ownership."
-      />
-      <ol className="timeline">
+      <SectionHeading title="Experience" />
+      <ExperienceTimeline items={content.experience} />
+      <div className="experience-stack">
         {content.experience.map((item) => (
-          <li key={item.id} className="timeline-item">
-            <ExperienceCard item={item} />
-          </li>
+          <ExperienceCard key={item.id} item={item} />
         ))}
-      </ol>
+      </div>
     </section>
   );
 }
