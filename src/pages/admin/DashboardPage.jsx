@@ -579,7 +579,7 @@ function CertificationsEditor({ items, onChange, media, onMedia, busy }) {
           </header>
           <MediaUpload
             slot={issuerSlotFor(item)}
-            label="Issuer logo"
+            label="Certificate logo"
             url={media?.[issuerSlotFor(item)]}
             onUpload={onMedia}
             busy={busy}

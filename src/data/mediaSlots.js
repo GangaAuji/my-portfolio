@@ -1,10 +1,7 @@
 import { ASSETS } from "./assetMap";
 
 export function issuerSlotFor(cert = {}) {
-  const issuer = String(cert.issuer || "").toLowerCase();
-  if (issuer.includes("udemy")) return "issuer:udemy";
-  if (issuer.includes("amazon") || issuer.includes("aws")) return "issuer:aws";
-  const id = String(cert.id || "other").replace(/[^a-z0-9-]/gi, "");
+  const id = String(cert.id || "other").replace(/[^a-z0-9._-]/gi, "") || "other";
   return `issuer:${id}`;
 }
 
@@ -16,11 +13,7 @@ export function defaultBaseFor(slot = "") {
   if (kind === "institution") return ASSETS.institutions[id] || ASSETS.institutions["msc-data-analytics"];
   if (kind === "project") return ASSETS.projects[id];
   if (kind === "skill") return ASSETS.skills[id];
-  if (kind === "issuer") {
-    if (id === "udemy") return ASSETS.issuers["sql-udemy"];
-    if (id === "aws") return ASSETS.issuers["aws-ccp"];
-    return ASSETS.issuers[id];
-  }
+  if (kind === "issuer") return ASSETS.issuers[id] || null;
   return null;
 }
 
@@ -42,13 +35,12 @@ export function listMediaSlots(content = {}) {
     });
   }
 
-  const issuers = new Map();
   for (const cert of content.certifications || []) {
-    const slot = issuerSlotFor(cert);
-    if (!issuers.has(slot)) issuers.set(slot, cert.issuer || slot);
-  }
-  for (const [slot, label] of issuers) {
-    slots.push({ slot, label, group: "Cert issuers" });
+    slots.push({
+      slot: issuerSlotFor(cert),
+      label: cert.title || cert.issuer || "Certification",
+      group: "Certifications",
+    });
   }
 
   for (const project of content.projects || []) {

@@ -76,18 +76,13 @@ export function HomeOverviews() {
           <ul className="overview-skills">
             {skills.map((item) => (
               <li key={item.name}>
-                <div className="skill-meter-head">
-                  <MediaImage
-                    slot={`skill:${item.icon}`}
-                    alt=""
-                    className="skill-logo"
-                    fallback={<TechIcon name={item.icon} />}
-                  />
-                  <span>{item.name}</span>
-                </div>
-                <div className="skill-meter-track" aria-hidden="true">
-                  <span />
-                </div>
+                <MediaImage
+                  slot={`skill:${item.icon}`}
+                  alt=""
+                  className="skill-logo"
+                  fallback={<TechIcon name={item.icon} />}
+                />
+                <span>{item.name}</span>
               </li>
             ))}
           </ul>
@@ -122,7 +117,7 @@ export function HomeOverviews() {
       {latestEducation ? (
         <section className="section is-overview">
           <OverviewHead title="Education" href="/education" />
-          <EducationCard item={latestEducation} />
+          <EducationCard item={latestEducation} compact />
         </section>
       ) : null}
 

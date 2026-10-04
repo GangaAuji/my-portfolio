@@ -1,8 +1,8 @@
 import { useContent } from "../context/useContent";
 import { MetricCard } from "../components/MetricCard";
-import { SectionHeading } from "../components/SectionHeading";
 import { Icon } from "../components/Icon";
 import { ResumeButton } from "../components/ResumeButton";
+import { DevOpsPillars } from "../components/DevOpsPillars";
 
 export function About() {
   const { content } = useContent();
@@ -10,16 +10,24 @@ export function About() {
 
   return (
     <section className="section">
-      <SectionHeading
-        title="About"
-        description={profile.about.intro}
-      />
-      <div className="about-grid">
-        <div className="about-copy">
+      <DevOpsPillars />
+      <div className="about-intro">
+        <header className="section-heading">
+          <p className="eyebrow">{profile.title}</p>
+          <h2>About</h2>
+          <p className="section-copy">{profile.about.intro}</p>
+        </header>
+      </div>
+
+      <div className="about-metrics">
+        {metrics.map((metric) => (
+          <MetricCard key={metric.id} {...metric} />
+        ))}
+      </div>
+
+      <div className="about-split">
+        <div className="about-story">
           <p>{profile.about.focus}</p>
-          <div className="hero-actions">
-            <ResumeButton />
-          </div>
           <ul className="focus-list">
             {profile.about.points.map((point) => (
               <li key={point}>
@@ -28,20 +36,19 @@ export function About() {
               </li>
             ))}
           </ul>
-          <div className="impact-grid">
-            {impactHighlights.map((item) => (
-              <article key={item.id} className="impact-card">
+          <ResumeButton />
+        </div>
+        <ol className="about-impacts">
+          {impactHighlights.map((item, index) => (
+            <li key={item.id}>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              <div>
                 <h3>{item.title}</h3>
                 <p>{item.text}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-        <div className="metrics-grid">
-          {metrics.map((metric) => (
-            <MetricCard key={metric.id} {...metric} />
+              </div>
+            </li>
           ))}
-        </div>
+        </ol>
       </div>
     </section>
   );

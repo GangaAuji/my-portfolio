@@ -26,8 +26,8 @@
   --focus: #2563eb;
   --radius: 16px;
   --radius-sm: 10px;
-  --max: 1180px;
-  --page-pad: clamp(20px, 4vw, 48px);
+  --max: 1320px;
+  --page-pad: 20px;
   --nav-h: 64px;
   --font: "Inter", "Manrope", system-ui, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, monospace;

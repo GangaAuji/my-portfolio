@@ -1,5 +1,5 @@
-import { Education } from "../sections/Education";
+import { Certifications } from "../sections/Certifications";
 
 export function EducationPage() {
-  return <Education />;
+  return <Certifications initialFilter="education" />;
 }

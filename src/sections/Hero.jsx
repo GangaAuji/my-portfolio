@@ -1,4 +1,5 @@
 import { useContent } from "../context/useContent";
+import { useInView } from "../hooks/useInView";
 import { Button } from "../components/Button";
 import { HeroIllustration } from "../components/HeroIllustration";
 import { Icon } from "../components/Icon";
@@ -6,9 +7,10 @@ import { Icon } from "../components/Icon";
 export function Hero() {
   const { content } = useContent();
   const { profile } = content;
+  const { ref, inView } = useInView();
 
   return (
-    <section className="page-wrap hero" id="home">
+    <section ref={ref} className={`page-wrap hero ${inView ? "is-inview" : ""}`} id="home">
       <div className="hero-panel">
         <div className="hero-copy">
           <h1 className="hero-name">{profile.name}</h1>

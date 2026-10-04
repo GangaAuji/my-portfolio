@@ -1,6 +1,6 @@
 export const ASSETS = {
   profile: "assets/profile/photo",
-  hero: "assets/hero/infrastructure",
+  hero: "assets/hero/home-banner",
   companies: {
     "gordinateur-devops": "assets/companies/gordinateur",
     "magic-bus-aws-restart": "assets/companies/magic-bus",

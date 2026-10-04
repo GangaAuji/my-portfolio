@@ -440,7 +440,7 @@
       "location": "Navi Mumbai, Maharashtra, India",
       "startDate": "2024-06",
       "endDate": "2026-04",
-      "status": "Expected",
+      "status": "Completed",
       "notes": "Postgraduate study in data analytics alongside cloud and infrastructure work."
     },
     {
@@ -449,8 +449,8 @@
       "institution": "Pillai College of Arts, Commerce & Science",
       "location": "Navi Mumbai, Maharashtra, India",
       "startDate": "2020",
-      "endDate": "2023",
-      "status": "",
+      "endDate": "2023-04",
+      "status": "Completed",
       "notes": ""
     }
   ],
@@ -522,6 +522,25 @@
     }
   ],
   "media": {
-    "company:gordinateur-devops": "/assets/companies/gordinateur-devops.png?v=1788871189863"
+    "company:gordinateur-devops": "/assets/companies/gordinateur-devops.png?v=1788871189863",
+    "skill:aws": "/assets/skills/aws.svg?v=1790170473243",
+    "skill:database": "/assets/skills/database.svg?v=1790170488817",
+    "skill:cloud": "/assets/skills/cloud.svg?v=1790170505329",
+    "skill:network": "/assets/skills/network.svg?v=1790170512364",
+    "skill:shield": "/assets/skills/shield.svg?v=1790170519144",
+    "skill:monitor": "/assets/skills/monitor.svg?v=1790170526101",
+    "skill:build": "/assets/skills/build.svg?v=1790170534157",
+    "skill:rocket": "/assets/skills/rocket.svg?v=1790170542149",
+    "skill:pipeline": "/assets/skills/pipeline.png?v=1790170598958",
+    "skill:github": "/assets/skills/github.webp?v=1790170676050",
+    "skill:jenkins": "/assets/skills/jenkins.webp?v=1790170705566",
+    "skill:terraform": "/assets/skills/terraform.webp?v=1790170778195",
+    "skill:linux": "/assets/skills/linux.png?v=1790170825932",
+    "skill:lock": "/assets/skills/lock.png?v=1790170879958",
+    "skill:alert": "/assets/skills/alert.jpg?v=1790170930538",
+    "skill:python": "/assets/skills/python.png?v=1790170958513",
+    "skill:terminal": "/assets/skills/terminal.png?v=1790170995244",
+    "issuer:aws": "/assets/issuers/aws.png?v=1790334366501",
+    "issuer:aws-saa": "/assets/issuers/aws-saa.png?v=1790334678751"
   }
 }

@@ -1,18 +1,20 @@
 import { useContent } from "../context/useContent";
-import { SectionHeading } from "../components/SectionHeading";
-import { SkillGroup } from "../components/SkillGroup";
+import { SkillGlobe } from "../components/SkillGlobe";
 
 export function Skills() {
   const { content } = useContent();
+  const groups = content.skillGroups || [];
+  const toolCount = groups.reduce((total, group) => total + (group.items?.length || 0), 0);
 
   return (
     <section className="section">
-      <SectionHeading title="Proficiency" />
-      <div className="skills-grid">
-        {content.skillGroups.map((group) => (
-          <SkillGroup key={group.id} group={group} />
-        ))}
-      </div>
+      <header className="section-heading">
+        <h2>Skills</h2>
+        <p className="section-copy">
+          {groups.length} practice areas and {toolCount} tools. Drag the globe, or search for a tool.
+        </p>
+      </header>
+      <SkillGlobe groups={groups} />
     </section>
   );
 }
