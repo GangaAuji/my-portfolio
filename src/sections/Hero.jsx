@@ -3,6 +3,7 @@ import { useInView } from "../hooks/useInView";
 import { Button } from "../components/Button";
 import { HeroIllustration } from "../components/HeroIllustration";
 import { Icon } from "../components/Icon";
+import { ResumeButton } from "../components/ResumeButton";
 
 export function Hero() {
   const { content } = useContent();
@@ -16,9 +17,11 @@ export function Hero() {
           <h1 className="hero-name">{profile.name}</h1>
           <p className="hero-title">{profile.title}</p>
           <p className="hero-subtitle">{profile.subtitle}</p>
-          <p className="hero-tagline">{profile.tagline}</p>
+          {profile.homeLine ? <p className="hero-line">{profile.homeLine}</p> : null}
+          {profile.tagline ? <p className="hero-tagline">{profile.tagline}</p> : null}
           <div className="hero-actions">
-            <Button href="/experience" icon={<Icon name="arrow" size={16} />}>
+            <ResumeButton variant="primary" />
+            <Button href="/experience" variant="secondary" icon={<Icon name="arrow" size={16} />}>
               View Experience
             </Button>
             <Button href="/contact" variant="secondary">

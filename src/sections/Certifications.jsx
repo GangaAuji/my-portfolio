@@ -61,7 +61,7 @@ export function Certifications({ initialFilter = "all" }) {
       <header className="section-heading">
         <h2>Education and Certifications</h2>
         <p className="section-copy">
-          A commitment to continuous learning, cloud-native architecture, and system engineering fundamentals.
+        Building a strong foundation in technology through continuous learning, professional development, and hands-on exploration of DevOps practices, cloud infrastructure, and system engineering.
         </p>
       </header>
 
@@ -151,20 +151,28 @@ export function Certifications({ initialFilter = "all" }) {
               const range = [start, end].filter(Boolean).join(" — ");
               return (
                 <li key={item.id}>
-                  <article>
-                    <p className="cred-year">{end || start || item.status}</p>
-                    <h4>{item.degree}</h4>
-                    <p className="cred-issuer">
-                      {item.institution}
-                      {item.location ? ` · ${item.location}` : ""}
-                    </p>
-                    {range ? <p className="cred-meta">{range}</p> : null}
-                    {item.notes ? (
-                      <details>
-                        <summary>Study notes</summary>
-                        <p>{item.notes}</p>
-                      </details>
-                    ) : null}
+                  <article className="cred-study">
+                    <MediaImage
+                      slot={`institution:${item.id}`}
+                      alt=""
+                      className="cred-study-logo"
+                      fallback={<span className="cred-study-logo is-fallback">{(item.institution || "?").slice(0, 1)}</span>}
+                    />
+                    <div>
+                      <p className="cred-year">{end || start || item.status}</p>
+                      <h4>{item.degree}</h4>
+                      <p className="cred-issuer">
+                        {item.institution}
+                        {item.location ? ` · ${item.location}` : ""}
+                      </p>
+                      {range ? <p className="cred-meta">{range}</p> : null}
+                      {item.notes ? (
+                        <details>
+                          <summary>Study notes</summary>
+                          <p>{item.notes}</p>
+                        </details>
+                      ) : null}
+                    </div>
                   </article>
                 </li>
               );

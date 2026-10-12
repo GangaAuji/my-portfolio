@@ -6,7 +6,7 @@ import { useContent } from "../../context/useContent";
 import { useTheme } from "../../hooks/useTheme";
 import { issuerSlotFor } from "../../data/mediaSlots";
 import { ThemeToggle } from "../../components/ThemeToggle";
-import { AdminAvatar, InsightRail, OverviewBoard } from "./AdminWidgets";
+import { AdminAvatar, OverviewBoard } from "./AdminWidgets";
 import { MediaEditor } from "./MediaEditor";
 import { MediaUpload } from "./MediaUpload";
 import { clearAdminToken, getAdminToken } from "./LoginPage";
@@ -34,6 +34,7 @@ const LABELS = {
   phone: "Phone",
   linkedin: "LinkedIn URL",
   github: "GitHub URL",
+  homeLine: "Home headline",
   tagline: "Hero statement",
   contactCta: "Contact heading",
   contactNote: "Contact note",
@@ -66,6 +67,8 @@ const LABELS = {
   aboutIntro: "About intro",
   aboutFocus: "About focus",
   aboutPoints: "About highlights",
+  skillsTitle: "Heading",
+  skillsDescription: "Description",
 };
 
 export function DashboardPage() {
@@ -255,6 +258,8 @@ export function DashboardPage() {
             {tab === "skills" ? (
               <SkillsEditor
                 groups={draft.skillGroups}
+                section={draft.skillsSection}
+                onSection={(skillsSection) => setDraft({ ...draft, skillsSection })}
                 media={draft.media}
                 onChange={(skillGroups) => setDraft({ ...draft, skillGroups })}
                 onMedia={onMedia}
@@ -310,7 +315,6 @@ export function DashboardPage() {
               </div>
             ) : null}
           </div>
-          <InsightRail content={draft} />
         </div>
       </section>
     </div>
@@ -354,15 +358,17 @@ function ProfileEditor({ profile, onChange, media, onMedia, busy }) {
 
       <article className="admin-card">
         <h3>Biography</h3>
+        <Field label="homeLine" value={profile.homeLine || ""} onChange={(value) => set("homeLine", value)} />
         <Field label="tagline" value={profile.tagline || ""} multiline onChange={(value) => set("tagline", value)} />
         <Field label="aboutIntro" value={about.intro} multiline onChange={(intro) => set("about", { ...about, intro })} />
         <Field label="aboutFocus" value={about.focus} multiline onChange={(focus) => set("about", { ...about, focus })} />
-        <Field
+        <ListField
           label="aboutPoints"
-          value={(about.points || []).join("\n")}
+          kind="lines"
+          value={about.points || []}
           multiline
           hint="One highlight per line"
-          onChange={(text) => set("about", { ...about, points: lines(text) })}
+          onChange={(points) => set("about", { ...about, points })}
         />
       </article>
 
@@ -409,18 +415,20 @@ function ExperienceEditor({ items, onChange, media, onMedia, busy }) {
             Current role
           </label>
           <Field label="description" value={item.description || ""} multiline onChange={(value) => update(items, onChange, index, "description", value)} />
-          <Field
+          <ListField
             label="achievements"
-            value={(item.achievements || []).join("\n")}
+            kind="lines"
+            value={item.achievements || []}
             multiline
             hint="One achievement per line"
-            onChange={(value) => update(items, onChange, index, "achievements", lines(value))}
+            onChange={(value) => update(items, onChange, index, "achievements", value)}
           />
-          <Field
+          <ListField
             label="technologies"
-            value={(item.technologies || []).join(", ")}
-            hint="Comma-separated"
-            onChange={(value) => update(items, onChange, index, "technologies", csv(value))}
+            kind="csv"
+            value={item.technologies || []}
+            hint="Comma-separated. Names that match a skill show that skill's icon."
+            onChange={(value) => update(items, onChange, index, "technologies", value)}
           />
         </article>
       ))}
@@ -435,7 +443,7 @@ function ExperienceEditor({ items, onChange, media, onMedia, busy }) {
   );
 }
 
-function SkillsEditor({ groups, onChange, media, onMedia, busy }) {
+function SkillsEditor({ groups, section = {}, onSection, onChange, media, onMedia, busy }) {
   const icons = [];
   const seen = new Set();
   for (const group of groups || []) {
@@ -448,10 +456,28 @@ function SkillsEditor({ groups, onChange, media, onMedia, busy }) {
 
   return (
     <div className="admin-stack">
+      <article className="admin-card">
+        <h3>Skills page heading</h3>
+        <p className="muted">Shown above the technology sphere on the public Skills page.</p>
+        <Field
+          label="skillsTitle"
+          value={section.title || ""}
+          onChange={(value) => onSection({ ...section, title: value })}
+        />
+        <Field
+          label="skillsDescription"
+          value={section.description || ""}
+          multiline
+          onChange={(value) => onSection({ ...section, description: value })}
+        />
+      </article>
       {icons.length ? (
         <article className="admin-card">
           <h3>Skill icons</h3>
-          <p className="muted">These appear next to each skill on the public Skills page.</p>
+          <p className="muted">
+            These appear on the Skills sphere and next to matching technologies in Projects and Experience.
+            To use a new icon, type a new key in the skills list below (for example docker), save, then upload an image here.
+          </p>
           <div className="admin-media-grid">
             {icons.map((item) => (
               <MediaUpload
@@ -479,26 +505,15 @@ function SkillsEditor({ groups, onChange, media, onMedia, busy }) {
             next[index] = { ...group, title: value };
             onChange(next);
           }} />
-          <Field
+          <ListField
             label="skills"
-            value={(group.items || []).map((item) => {
-              const base = `${item.name}|${item.icon}`;
-              return item.level ? `${base}|${item.level}` : base;
-            }).join("\n")}
+            kind="skills"
+            value={group.items || []}
             multiline
-            hint="One per line as name|icon. Optional: name|icon|level (0–100) for a bar."
-            onChange={(value) => {
+            hint="One tool per line as name|icon, for example Docker|docker. Icon keys use letters, numbers, dot, dash or underscore."
+            onChange={(items) => {
               const next = groups.slice();
-              next[index] = {
-                ...group,
-                items: lines(value).map((line) => {
-                  const [name, icon = "cloud", level] = line.split("|");
-                  const parsed = { name: name.trim(), icon: icon.trim() || "cloud" };
-                  const amount = Number(level);
-                  if (Number.isFinite(amount) && amount > 0 && amount <= 100) parsed.level = amount;
-                  return parsed;
-                }),
-              };
+              next[index] = { ...group, items };
               onChange(next);
             }}
           />
@@ -539,11 +554,12 @@ function ProjectsEditor({ items, onChange, media, onMedia, busy }) {
             ))}
           </div>
           <Field label="description" value={item.description || ""} multiline onChange={(value) => update(items, onChange, index, "description", value)} />
-          <Field
+          <ListField
             label="technologies"
-            value={(item.technologies || []).join(", ")}
-            hint="Comma-separated"
-            onChange={(value) => update(items, onChange, index, "technologies", csv(value))}
+            kind="csv"
+            value={item.technologies || []}
+            hint="Comma-separated. Names that match a skill show that skill's icon."
+            onChange={(value) => update(items, onChange, index, "technologies", value)}
           />
           <label className="admin-check">
             <input
@@ -712,6 +728,61 @@ function update(items, onChange, index, key, value) {
 
 function lines(text) {
   return String(text).split(/\r?\n/).map((item) => item.trim()).filter(Boolean);
+}
+
+function parseSkills(text) {
+  return lines(text).map((line) => {
+    const [name, icon = "cloud", level] = line.split("|");
+    const key = icon.trim().toLowerCase().replace(/[^a-z0-9._-]/g, "");
+    const parsed = { name: name.trim(), icon: key || "cloud" };
+    const amount = Number(level);
+    if (Number.isFinite(amount) && amount > 0 && amount <= 100) parsed.level = amount;
+    return parsed;
+  });
+}
+
+const LIST_KINDS = {
+  lines: {
+    format: (items = []) => items.join("\n"),
+    parse: lines,
+  },
+  csv: {
+    format: (items = []) => items.join(", "),
+    parse: csv,
+  },
+  skills: {
+    format: (items = []) =>
+      items
+        .map((item) => {
+          const base = `${item.name}|${item.icon}`;
+          return item.level ? `${base}|${item.level}` : base;
+        })
+        .join("\n"),
+    parse: parseSkills,
+  },
+};
+
+/** Text field that edits a list. Keeps what you type (trailing commas, new lines) until the list itself changes. */
+function ListField({ label, kind, value, onChange, multiline, hint }) {
+  const { format, parse } = LIST_KINDS[kind];
+  const [text, setText] = useState(() => format(value));
+  const [seen, setSeen] = useState(value);
+  if (value !== seen) {
+    setSeen(value);
+    if (JSON.stringify(parse(text)) !== JSON.stringify(value)) setText(format(value));
+  }
+  return (
+    <Field
+      label={label}
+      value={text}
+      multiline={multiline}
+      hint={hint}
+      onChange={(next) => {
+        setText(next);
+        onChange(parse(next));
+      }}
+    />
+  );
 }
 
 function csv(text) {

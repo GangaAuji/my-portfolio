@@ -28,15 +28,6 @@ export function AdminAvatar({ name, size = "md" }) {
   );
 }
 
-export function InsightRail({ content }) {
-  return (
-    <aside className="admin-rail">
-      <TechStackCard metrics={content.metrics} />
-      <EngagementCard metrics={content.metrics} />
-    </aside>
-  );
-}
-
 export function OverviewBoard({ content, onOpen }) {
   const currentRole = (content.experience || []).find((item) => item.current) || content.experience?.[0];
   const featured = (content.projects || []).filter((item) => item.featured);
@@ -54,29 +45,33 @@ export function OverviewBoard({ content, onOpen }) {
           </article>
         ))}
       </div>
-      {currentRole ? (
-        <article className="admin-card">
-          <h3>Current role</h3>
-          <p className="admin-card-lead">{currentRole.role}</p>
-          <p className="muted">{currentRole.company}</p>
-          <button type="button" className="btn btn-secondary" onClick={() => onOpen("experience")}>
-            Edit experience
-          </button>
-        </article>
-      ) : null}
-      {featured.length ? (
-        <article className="admin-card">
-          <h3>Featured projects</h3>
-          <ul className="admin-plain-list">
-            {featured.map((item) => (
-              <li key={item.id}>{item.title}</li>
-            ))}
-          </ul>
-          <button type="button" className="btn btn-secondary" onClick={() => onOpen("projects")}>
-            Edit projects
-          </button>
-        </article>
-      ) : null}
+      <div className="admin-dash-grid">
+        {currentRole ? (
+          <article className="admin-card">
+            <h3>Current role</h3>
+            <p className="admin-card-lead">{currentRole.role}</p>
+            <p className="muted">{currentRole.company}</p>
+            <button type="button" className="btn btn-secondary" onClick={() => onOpen("experience")}>
+              Edit experience
+            </button>
+          </article>
+        ) : null}
+        {featured.length ? (
+          <article className="admin-card">
+            <h3>Featured projects</h3>
+            <ul className="admin-plain-list">
+              {featured.map((item) => (
+                <li key={item.id}>{item.title}</li>
+              ))}
+            </ul>
+            <button type="button" className="btn btn-secondary" onClick={() => onOpen("projects")}>
+              Edit projects
+            </button>
+          </article>
+        ) : null}
+        <TechStackCard metrics={content.metrics} />
+        <EngagementCard metrics={content.metrics} />
+      </div>
     </div>
   );
 }

@@ -11,9 +11,10 @@
     "resumeUrl": "/resume.pdf",
     "resumeFileName": "Ganga-Auji-Resume.pdf",
     "availability": "Open to DevOps, Cloud, and Infrastructure roles",
-    "tagline": "I operate production infrastructure and automate the path from git to running systems — AWS, Linux, CI/CD, and reliable deployments.",
+    "homeLine": "I Build, Automate & Scale Reliable Infrastructure.",
+    "tagline": "I engineer secure cloud environments, automate CI/CD pipelines, and streamline deployments to keep applications running reliably — from code commit to production.",
     "about": {
-      "intro": "DevOps Engineer serving as the sole deployment and infrastructure engineer for a software company's flagship product — a government-focused eHRMS platform (attendance, leave, and payroll) — live across 15+ client environments, alongside 250+ client websites.",
+      "intro": "DevOps Engineer specializing in deployment automation, infrastructure management, and production reliability. Experienced in managing government-focused eHRMS platforms across 15+ client environments and supporting hosting and operations for 250+ client websites.",
       "focus": "I built deployment automation that cut server setup from hours to minutes, introduced CI/CD where none existed, and independently diagnosed and resolved a recurring production database failure. AWS Certified Cloud Practitioner, currently pursuing AWS Solutions Architect Associate.",
       "points": [
         "Sole deployment engineer for a live eHRMS platform across 15+ client environments",
@@ -151,6 +152,10 @@
       ]
     }
   ],
+  "skillsSection": {
+    "title": "Technologies That Power My Workflow",
+    "description": "From infrastructure automation to secure deployments and observability, explore the technical stack I use to build, deploy, and operate reliable applications."
+  },
   "skillGroups": [
     {
       "id": "cloud",
@@ -541,6 +546,8 @@
     "skill:python": "/assets/skills/python.png?v=1790170958513",
     "skill:terminal": "/assets/skills/terminal.png?v=1790170995244",
     "issuer:aws": "/assets/issuers/aws.png?v=1790334366501",
-    "issuer:aws-saa": "/assets/issuers/aws-saa.png?v=1790334678751"
+    "issuer:aws-saa": "/assets/issuers/aws-saa.png?v=1790334678751",
+    "institution:bsc-computer-science": "/assets/institutions/bsc-computer-science.png?v=1791807878023",
+    "institution:msc-data-analytics": "/assets/institutions/msc-data-analytics.png?v=1791807890542"
   }
 }

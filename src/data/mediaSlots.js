@@ -12,7 +12,7 @@ export function defaultBaseFor(slot = "") {
   if (kind === "company") return ASSETS.companies[id];
   if (kind === "institution") return ASSETS.institutions[id] || ASSETS.institutions["msc-data-analytics"];
   if (kind === "project") return ASSETS.projects[id];
-  if (kind === "skill") return ASSETS.skills[id];
+  if (kind === "skill") return ASSETS.skills[id] || (id ? `assets/skills/${id}` : null);
   if (kind === "issuer") return ASSETS.issuers[id] || null;
   return null;
 }

@@ -322,7 +322,7 @@
   gap: 18px;
 }
 
-.admin-rail {
+.admin-dash-grid {
   display: grid;
   gap: 18px;
 }
@@ -504,13 +504,14 @@
 .admin-media-grid {
   display: grid;
   gap: 12px;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
 }
 
 .admin-media-slot {
   display: flex;
   gap: 12px;
   align-items: center;
+  min-width: 0;
   padding: 12px;
   border: 1px dashed var(--admin-line);
   border-radius: 14px;
@@ -518,10 +519,43 @@
   background: var(--admin-input);
 }
 
-.admin-media-slot input {
-  display: block;
-  margin-top: 8px;
+.admin-media-copy {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.admin-media-copy strong,
+.admin-media-slot small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-file-pick {
+  position: relative;
+  justify-self: start;
   max-width: 100%;
+  margin-top: 6px;
+  padding: 5px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--admin-line);
+  background: var(--admin-card);
+  color: var(--admin-text);
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.admin-file-pick input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
 }
 
 .admin-media-slot small {
@@ -567,7 +601,8 @@
     grid-template-columns: auto 1fr;
   }
 
-  .admin-stat-grid {
+  .admin-stat-grid,
+  .admin-dash-grid {
     grid-template-columns: 1fr 1fr;
   }
 }
@@ -595,7 +630,7 @@
 }
 
 @media (min-width: 1180px) {
-  .admin-workspace {
-    grid-template-columns: minmax(0, 1.7fr) minmax(280px, 0.8fr);
+  .admin-stat-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }

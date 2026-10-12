@@ -2,7 +2,7 @@ import { useContent } from "../context/useContent";
 import { MetricCard } from "../components/MetricCard";
 import { Icon } from "../components/Icon";
 import { ResumeButton } from "../components/ResumeButton";
-import { DevOpsPillars } from "../components/DevOpsPillars";
+import { AboutScene } from "../components/AboutScene";
 
 export function About() {
   const { content } = useContent();
@@ -10,14 +10,13 @@ export function About() {
 
   return (
     <section className="section">
-      <DevOpsPillars />
       <div className="about-intro">
         <header className="section-heading">
-          <p className="eyebrow">{profile.title}</p>
           <h2>About</h2>
           <p className="section-copy">{profile.about.intro}</p>
         </header>
       </div>
+      <AboutScene />
 
       <div className="about-metrics">
         {metrics.map((metric) => (

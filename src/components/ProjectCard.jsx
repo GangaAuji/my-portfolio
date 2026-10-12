@@ -1,6 +1,7 @@
 import { Button } from "./Button";
 import { Icon } from "./Icon";
 import { MediaImage } from "./MediaImage";
+import { TechChip } from "./TechChip";
 
 export function ProjectCard({ project, compact = false }) {
   return (
@@ -14,9 +15,7 @@ export function ProjectCard({ project, compact = false }) {
         {project.technologies?.length ? (
           <div className="tech-orbs" aria-label="Tech stack">
             {project.technologies.slice(0, compact ? 4 : undefined).map((tech) => (
-              <span key={tech} className="tech-orb" title={tech}>
-                {tech.slice(0, 1)}
-              </span>
+              <TechChip key={tech} name={tech} />
             ))}
           </div>
         ) : null}

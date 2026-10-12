@@ -1,6 +1,7 @@
 import { Badge } from "./Badge";
 import { Icon } from "./Icon";
 import { MediaImage } from "./MediaImage";
+import { TechChip } from "./TechChip";
 
 function formatRange(startDate, endDate, current) {
   if (!startDate && !endDate && current) return "Current";
@@ -63,9 +64,9 @@ export function ExperienceCard({ item }) {
         </ul>
       ) : null}
       {item.technologies?.length ? (
-        <div className="chip-row">
+        <div className="tech-orbs" aria-label="Technologies">
           {item.technologies.map((tech) => (
-            <Badge key={tech}>{tech}</Badge>
+            <TechChip key={tech} name={tech} />
           ))}
         </div>
       ) : null}
