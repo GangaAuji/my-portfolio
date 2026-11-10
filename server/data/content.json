@@ -26,6 +26,41 @@
     "contactCta": "Let's build reliable infrastructure.",
     "contactNote": "If you need someone who can own servers, pipelines, and production incidents — not just talk about them — let's talk."
   },
+  "media": {
+    "company:gordinateur-devops": "/assets/companies/gordinateur-devops.png?v=1788871189863",
+    "skill:aws": "/assets/skills/aws.svg?v=1790170473243",
+    "skill:database": "/assets/skills/database.svg?v=1790170488817",
+    "skill:cloud": "/assets/skills/cloud.svg?v=1790170505329",
+    "skill:network": "/assets/skills/network.svg?v=1790170512364",
+    "skill:shield": "/assets/skills/shield.svg?v=1790170519144",
+    "skill:monitor": "/assets/skills/monitor.svg?v=1790170526101",
+    "skill:build": "/assets/skills/build.svg?v=1790170534157",
+    "skill:rocket": "/assets/skills/rocket.svg?v=1790170542149",
+    "skill:pipeline": "/assets/skills/pipeline.png?v=1790170598958",
+    "skill:github": "/assets/skills/github.webp?v=1790170676050",
+    "skill:jenkins": "/assets/skills/jenkins.webp?v=1790170705566",
+    "skill:terraform": "/assets/skills/terraform.webp?v=1790170778195",
+    "skill:linux": "/assets/skills/linux.png?v=1790170825932",
+    "skill:lock": "/assets/skills/lock.png?v=1790170879958",
+    "skill:alert": "/assets/skills/alert.jpg?v=1790170930538",
+    "skill:python": "/assets/skills/python.png?v=1790170958513",
+    "skill:terminal": "/assets/skills/terminal.png?v=1790170995244",
+    "issuer:aws": "/assets/issuers/aws.png?v=1790334366501",
+    "issuer:aws-saa": "/assets/issuers/aws-saa.png?v=1790334678751",
+    "institution:bsc-computer-science": "/assets/institutions/bsc-computer-science.png?v=1791807878023",
+    "institution:msc-data-analytics": "/assets/institutions/msc-data-analytics.png?v=1791807890542",
+    "company:magic-bus-aws-restart": "/assets/companies/magic-bus-aws-restart.png?v=1791880786307",
+    "company:one-point-one-it": "/assets/companies/one-point-one-it.webp?v=1791881070488",
+    "issuer:aws-restart": "/assets/issuers/aws-restart.png?v=1794326539724",
+    "issuer:aws-ccp": "/assets/issuers/aws-ccp.png?v=1794326588206",
+    "issuer:sql-udemy": "/assets/issuers/sql-udemy.jpg?v=1794326634163",
+    "project:timetable": "/assets/projects/timetable.png?v=1794327193614",
+    "project:personal-cicd": "/assets/projects/personal-cicd.webp?v=1794327291935"
+  },
+  "skillsSection": {
+    "title": "Technologies That Power My Workflow",
+    "description": "From infrastructure automation to secure deployments and observability, explore the technical stack I use to build, deploy, and operate reliable applications."
+  },
   "metrics": [
     {
       "id": "environments",
@@ -152,10 +187,6 @@
       ]
     }
   ],
-  "skillsSection": {
-    "title": "Technologies That Power My Workflow",
-    "description": "From infrastructure automation to secure deployments and observability, explore the technical stack I use to build, deploy, and operate reliable applications."
-  },
   "skillGroups": [
     {
       "id": "cloud",
@@ -401,15 +432,6 @@
   ],
   "certifications": [
     {
-      "id": "aws-saa",
-      "title": "AWS Certified Solutions Architect – Associate",
-      "issuer": "Amazon Web Services",
-      "date": "",
-      "status": "in-progress",
-      "credentialUrl": "",
-      "summary": "In progress."
-    },
-    {
       "id": "aws-ccp",
       "title": "AWS Certified Cloud Practitioner",
       "issuer": "Amazon Web Services",
@@ -525,31 +547,5 @@
       "label": "Contact",
       "href": "/contact"
     }
-  ],
-  "media": {
-    "company:gordinateur-devops": "/assets/companies/gordinateur-devops.png?v=1788871189863",
-    "skill:aws": "/assets/skills/aws.svg?v=1790170473243",
-    "skill:database": "/assets/skills/database.svg?v=1790170488817",
-    "skill:cloud": "/assets/skills/cloud.svg?v=1790170505329",
-    "skill:network": "/assets/skills/network.svg?v=1790170512364",
-    "skill:shield": "/assets/skills/shield.svg?v=1790170519144",
-    "skill:monitor": "/assets/skills/monitor.svg?v=1790170526101",
-    "skill:build": "/assets/skills/build.svg?v=1790170534157",
-    "skill:rocket": "/assets/skills/rocket.svg?v=1790170542149",
-    "skill:pipeline": "/assets/skills/pipeline.png?v=1790170598958",
-    "skill:github": "/assets/skills/github.webp?v=1790170676050",
-    "skill:jenkins": "/assets/skills/jenkins.webp?v=1790170705566",
-    "skill:terraform": "/assets/skills/terraform.webp?v=1790170778195",
-    "skill:linux": "/assets/skills/linux.png?v=1790170825932",
-    "skill:lock": "/assets/skills/lock.png?v=1790170879958",
-    "skill:alert": "/assets/skills/alert.jpg?v=1790170930538",
-    "skill:python": "/assets/skills/python.png?v=1790170958513",
-    "skill:terminal": "/assets/skills/terminal.png?v=1790170995244",
-    "issuer:aws": "/assets/issuers/aws.png?v=1790334366501",
-    "issuer:aws-saa": "/assets/issuers/aws-saa.png?v=1790334678751",
-    "institution:bsc-computer-science": "/assets/institutions/bsc-computer-science.png?v=1791807878023",
-    "institution:msc-data-analytics": "/assets/institutions/msc-data-analytics.png?v=1791807890542",
-    "company:magic-bus-aws-restart": "/assets/companies/magic-bus-aws-restart.png?v=1791880786307",
-    "company:one-point-one-it": "/assets/companies/one-point-one-it.webp?v=1791881070488"
-  }
+  ]
 }

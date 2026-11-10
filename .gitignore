@@ -39,3 +39,4 @@ Desktop.ini
 *.local
 .cache/
 coverage/
+.vite/
