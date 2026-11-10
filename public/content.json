@@ -548,6 +548,8 @@
     "issuer:aws": "/assets/issuers/aws.png?v=1790334366501",
     "issuer:aws-saa": "/assets/issuers/aws-saa.png?v=1790334678751",
     "institution:bsc-computer-science": "/assets/institutions/bsc-computer-science.png?v=1791807878023",
-    "institution:msc-data-analytics": "/assets/institutions/msc-data-analytics.png?v=1791807890542"
+    "institution:msc-data-analytics": "/assets/institutions/msc-data-analytics.png?v=1791807890542",
+    "company:magic-bus-aws-restart": "/assets/companies/magic-bus-aws-restart.png?v=1791880786307",
+    "company:one-point-one-it": "/assets/companies/one-point-one-it.webp?v=1791881070488"
   }
 }
