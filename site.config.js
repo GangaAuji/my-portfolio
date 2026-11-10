@@ -4,5 +4,5 @@
  */
 export const siteConfig = {
   githubUsername: "GangaAuji",
-  repositoryName: "PlainPortfolio",
+  repositoryName: "my-portfolio",
 };

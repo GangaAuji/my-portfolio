@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import { saveContent, uploadMedia, uploadResume } from "../../api/client";
+import { logout as endSession, saveContent, uploadMedia, uploadResume, checkSession } from "../../api/client";
 import { Icon, TechIcon } from "../../components/Icon";
 import { useContent } from "../../context/useContent";
 import { useTheme } from "../../hooks/useTheme";
@@ -9,7 +9,7 @@ import { ThemeToggle } from "../../components/ThemeToggle";
 import { AdminAvatar, OverviewBoard } from "./AdminWidgets";
 import { MediaEditor } from "./MediaEditor";
 import { MediaUpload } from "./MediaUpload";
-import { clearAdminToken, getAdminToken } from "./LoginPage";
+import { useNoIndex } from "./LoginPage";
 
 const TABS = [
   { id: "dashboard", label: "Dashboard", icon: "layout" },
@@ -72,8 +72,9 @@ const LABELS = {
 };
 
 export function DashboardPage() {
-  const token = getAdminToken();
   const navigate = useNavigate();
+  const [session, setSession] = useState("checking");
+  useNoIndex();
   const { content, setContent, refresh } = useContent();
   const { theme, toggleTheme } = useTheme();
   const [tab, setTab] = useState("profile");
@@ -86,16 +87,27 @@ export function DashboardPage() {
     setDraft(structuredClone(content));
   }, [content]);
 
+  useEffect(() => {
+    let live = true;
+    checkSession().then((ok) => {
+      if (live) setSession(ok ? "in" : "out");
+    });
+    return () => {
+      live = false;
+    };
+  }, []);
+
   const synced = useMemo(() => JSON.stringify(draft) === JSON.stringify(content), [draft, content]);
   const activeTab = TABS.find((item) => item.id === tab);
   const skillIcons = uniqueSkillIcons(draft.skillGroups);
 
-  if (!token) {
-    return <Navigate to="/admin/login" replace />;
+  if (session !== "in") {
+    if (session === "out") return <Navigate to="/admin/login" replace />;
+    return <main className="admin-login" />;
   }
 
-  function logout() {
-    clearAdminToken();
+  async function logout() {
+    await endSession();
     navigate("/admin/login", { replace: true });
   }
 
@@ -103,7 +115,7 @@ export function DashboardPage() {
     setBusy(true);
     setError("");
     try {
-      const saved = await saveContent(token, next);
+      const saved = await saveContent(next);
       setDraft(saved);
       setContent(saved);
       setStatus("Saved. Public pages now use this content.");
@@ -118,7 +130,7 @@ export function DashboardPage() {
     setBusy(true);
     setError("");
     try {
-      const result = await uploadMedia(token, slot, file);
+      const result = await uploadMedia(slot, file);
       const next = {
         ...draft,
         media: { ...(draft.media || {}), [slot]: result.url },
@@ -139,7 +151,7 @@ export function DashboardPage() {
     setBusy(true);
     setError("");
     try {
-      const result = await uploadResume(token, file);
+      const result = await uploadResume(file);
       const next = {
         ...draft,
         profile: {

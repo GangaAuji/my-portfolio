@@ -1,15 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import { login } from "../../api/client";
+import { checkSession, login } from "../../api/client";
 
-const TOKEN_KEY = "portfolio-admin-token";
-
-export function getAdminToken() {
-  return sessionStorage.getItem(TOKEN_KEY) || "";
-}
-
-export function clearAdminToken() {
-  sessionStorage.removeItem(TOKEN_KEY);
+export function useNoIndex() {
+  useEffect(() => {
+    const meta = document.createElement("meta");
+    meta.name = "robots";
+    meta.content = "noindex, nofollow";
+    document.head.appendChild(meta);
+    return () => meta.remove();
+  }, []);
 }
 
 export function LoginPage() {
@@ -17,8 +17,25 @@ export function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [session, setSession] = useState("checking");
 
-  if (getAdminToken()) {
+  useNoIndex();
+
+  useEffect(() => {
+    let live = true;
+    checkSession().then((ok) => {
+      if (live) setSession(ok ? "in" : "out");
+    });
+    return () => {
+      live = false;
+    };
+  }, []);
+
+  if (session === "checking") {
+    return <main className="admin-login" />;
+  }
+
+  if (session === "in") {
     return <Navigate to="/admin" replace />;
   }
 
@@ -27,8 +44,7 @@ export function LoginPage() {
     setBusy(true);
     setError("");
     try {
-      const token = await login(password);
-      sessionStorage.setItem(TOKEN_KEY, token);
+      await login(password);
       navigate("/admin", { replace: true });
     } catch (err) {
       setError(err.message);
@@ -42,7 +58,7 @@ export function LoginPage() {
       <form className="admin-login-card" onSubmit={onSubmit}>
         <p className="eyebrow">Content Studio</p>
         <h1>Sign in to edit content</h1>
-        <p className="muted">Changes save to the server and appear on the public site immediately.</p>
+        <p className="muted">The public site is read-only. Sign-in works only on the private editor.</p>
         <label className="admin-field">
           Password
           <input
@@ -50,6 +66,8 @@ export function LoginPage() {
             value={password}
             onChange={(event) => setPassword(event.target.value)}
             autoComplete="current-password"
+            minLength={8}
+            maxLength={200}
             required
           />
         </label>

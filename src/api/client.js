@@ -20,54 +20,69 @@ export async function fetchContent() {
   return staticRes.json();
 }
 
+const adminHeaders = { "X-Requested-With": "portfolio-admin" };
+
+async function adminFetch(path, options = {}) {
+  let response;
+  try {
+    response = await fetch(path, {
+      ...options,
+      credentials: "include",
+      headers: { Accept: "application/json", ...adminHeaders, ...(options.headers || {}) },
+    });
+  } catch {
+    throw new Error("The editor is unavailable on this public site.");
+  }
+  const payload = await response.json().catch(() => ({}));
+  if (response.status === 404) {
+    throw new Error("The editor is unavailable on this public site.");
+  }
+  if (!response.ok) throw new Error(payload.error || "Request failed");
+  return payload;
+}
+
+export async function checkSession() {
+  try {
+    await adminFetch("/api/session");
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export async function login(password) {
-  const response = await fetch("/api/login", {
+  await adminFetch("/api/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ password }),
   });
-  const payload = await response.json();
-  if (!response.ok) throw new Error(payload.error || "Login failed");
-  return payload.token;
 }
 
-export async function saveContent(token, content) {
-  const response = await fetch("/api/content", {
+export async function logout() {
+  try {
+    await adminFetch("/api/logout", { method: "POST" });
+  } catch {
+    // The local session is cleared even if the server is already gone.
+  }
+}
+
+export async function saveContent(content) {
+  return adminFetch("/api/content", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(content),
   });
-  const payload = await response.json();
-  if (!response.ok) throw new Error(payload.error || "Save failed");
-  return payload;
 }
 
-export async function uploadMedia(token, slot, file) {
+export async function uploadMedia(slot, file) {
   const body = new FormData();
   body.append("slot", slot);
   body.append("file", file);
-  const response = await fetch("/api/media", {
-    method: "POST",
-    headers: { Authorization: `Bearer ${token}` },
-    body,
-  });
-  const payload = await response.json();
-  if (!response.ok) throw new Error(payload.error || "Upload failed");
-  return payload;
+  return adminFetch("/api/media", { method: "POST", body });
 }
 
-export async function uploadResume(token, file) {
+export async function uploadResume(file) {
   const body = new FormData();
   body.append("file", file);
-  const response = await fetch("/api/resume", {
-    method: "POST",
-    headers: { Authorization: `Bearer ${token}` },
-    body,
-  });
-  const payload = await response.json();
-  if (!response.ok) throw new Error(payload.error || "Upload failed");
-  return payload;
+  return adminFetch("/api/resume", { method: "POST", body });
 }

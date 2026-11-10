@@ -16,7 +16,18 @@ This starts:
 
 Admin panel: `http://localhost:5173/admin`
 
-Default password is in `.env` (`ADMIN_PASSWORD`). Change it before sharing the site.
+Set `ADMIN_PASSWORD` in `.env` and do not commit that file.
+
+The public GitHub Pages site is read-only. Saving content, uploads, and sign-in work only when this API is running, and the API listens on `127.0.0.1`.
+
+Admin controls used for review:
+
+- HttpOnly, SameSite=Strict session cookie. The browser script cannot read it, and it is revoked on logout.
+- Sign-in is rate-limited, compared in constant time, and refused in production if the password or `ADMIN_SECRET` is missing, short, or a known default.
+- State-changing requests must send the admin header, and cross-origin access is limited to this host or localhost.
+- Responses send nosniff, frame denial, referrer policy, permissions policy, and a content security policy.
+- Uploads are checked by file signature. SVG uploads that contain scripts are rejected. Saved paths cannot leave the public folder.
+- Admin screens send `noindex`. Session files are not committed.
 
 Production (serves the built site + API together):
 
